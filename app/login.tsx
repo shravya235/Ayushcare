@@ -168,7 +168,8 @@ export default function LoginScreen() {
     // ==========================================================================
     const handleLogin = async () => {
         if (!selectedRole || !email || !password) {
-            // TODO: Show validation error toast/alert
+            // Validation error
+            alert('Please fill in all fields and select a role.');
             return;
         }
 
