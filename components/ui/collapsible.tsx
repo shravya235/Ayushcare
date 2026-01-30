@@ -4,42 +4,76 @@ import { StyleSheet, TouchableOpacity } from 'react-native';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Colors } from '@/constants/theme';
+import { BorderRadius, Colors, Spacing } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 
 export function Collapsible({ children, title }: PropsWithChildren & { title: string }) {
   const [isOpen, setIsOpen] = useState(false);
-  const theme = useColorScheme() ?? 'light';
+  const colorScheme = useColorScheme() ?? 'light';
 
   return (
-    <ThemedView>
+    <ThemedView style={styles.container}>
       <TouchableOpacity
-        style={styles.heading}
+        style={[
+          styles.heading,
+          {
+            backgroundColor: Colors[colorScheme].backgroundAlt,
+            borderColor: Colors[colorScheme].border,
+          },
+        ]}
         onPress={() => setIsOpen((value) => !value)}
-        activeOpacity={0.8}>
+        activeOpacity={0.7}>
         <IconSymbol
           name="chevron.right"
-          size={18}
+          size={16}
           weight="medium"
-          color={theme === 'light' ? Colors.light.icon : Colors.dark.icon}
-          style={{ transform: [{ rotate: isOpen ? '90deg' : '0deg' }] }}
+          color={Colors[colorScheme].icon}
+          style={[
+            styles.chevron,
+            { transform: [{ rotate: isOpen ? '90deg' : '0deg' }] },
+          ]}
         />
-
-        <ThemedText type="defaultSemiBold">{title}</ThemedText>
+        <ThemedText type="defaultSemiBold" style={styles.title}>
+          {title}
+        </ThemedText>
       </TouchableOpacity>
-      {isOpen && <ThemedView style={styles.content}>{children}</ThemedView>}
+      {isOpen && (
+        <ThemedView
+          style={[
+            styles.content,
+            { borderColor: Colors[colorScheme].border },
+          ]}>
+          {children}
+        </ThemedView>
+      )}
     </ThemedView>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    marginBottom: Spacing.sm,
+  },
   heading: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 6,
+    paddingVertical: Spacing.md,
+    paddingHorizontal: Spacing.md,
+    borderRadius: BorderRadius.md,
+    borderWidth: 1,
+    gap: Spacing.sm,
+  },
+  chevron: {
+    width: 20,
+  },
+  title: {
+    flex: 1,
   },
   content: {
-    marginTop: 6,
-    marginLeft: 24,
+    marginTop: Spacing.xs,
+    marginLeft: Spacing.lg,
+    paddingLeft: Spacing.md,
+    borderLeftWidth: 2,
+    paddingVertical: Spacing.sm,
   },
 });
