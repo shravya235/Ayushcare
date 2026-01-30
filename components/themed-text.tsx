@@ -3,6 +3,7 @@ import { StyleSheet, Text, type TextProps } from 'react-native';
 import { Colors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { useThemeColor } from '@/hooks/use-theme-color';
+import { rf } from '@/utils/responsive';
 
 export type ThemedTextProps = TextProps & {
   lightColor?: string;
@@ -43,37 +44,37 @@ export function ThemedText({
 
 const styles = StyleSheet.create({
   default: {
-    fontSize: 16,
-    lineHeight: 26,
+    fontSize: rf(16),
+    lineHeight: rf(26),
     letterSpacing: 0.2,
   },
   defaultSemiBold: {
-    fontSize: 16,
-    lineHeight: 26,
+    fontSize: rf(16),
+    lineHeight: rf(26),
     fontWeight: '600',
     letterSpacing: 0.1,
   },
   title: {
-    fontSize: 32,
+    fontSize: rf(32),
     fontWeight: '700',
-    lineHeight: 40,
+    lineHeight: rf(40),
     letterSpacing: -0.5,
   },
   subtitle: {
-    fontSize: 20,
+    fontSize: rf(20),
     fontWeight: '600',
-    lineHeight: 28,
+    lineHeight: rf(28),
     letterSpacing: 0.15,
   },
   link: {
-    fontSize: 16,
-    lineHeight: 26,
+    fontSize: rf(16),
+    lineHeight: rf(26),
     fontWeight: '500',
     letterSpacing: 0.1,
   },
   caption: {
-    fontSize: 14,
-    lineHeight: 20,
+    fontSize: rf(14),
+    lineHeight: rf(20),
     letterSpacing: 0.25,
   },
 });

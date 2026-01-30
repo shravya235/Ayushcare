@@ -43,17 +43,7 @@ export default function TabLayout() {
           ),
         }}
       />
-      <Tabs.Screen
-        name="explore"
-        options={{
-          title: 'Explore',
-          tabBarIcon: ({ color, focused }) => (
-            <View style={[styles.iconWrapper, focused && styles.iconFocused]}>
-              <IconSymbol size={26} name="leaf.fill" color={color} />
-            </View>
-          ),
-        }}
-      />
+
     </Tabs>
   );
 }

@@ -71,22 +71,22 @@ const tintColorDark = AyurvedaColors.gradientStart;
 
 export const Colors = {
   light: {
-    text: AyurvedaColors.textPrimary,
+    text: AyurvedaColors.deepForest, // Was textPrimary
     textSecondary: AyurvedaColors.textSecondary,
     textMuted: AyurvedaColors.textMuted,
-    background: AyurvedaColors.backgroundLight,
+    background: AyurvedaColors.offWhite, // Was backgroundLight
     backgroundAlt: AyurvedaColors.backgroundLightAlt,
-    tint: tintColorLight,
+    tint: AyurvedaColors.herbalGreen, // Was tintColorLight (primary)
     icon: AyurvedaColors.secondary,
     tabIconDefault: AyurvedaColors.secondaryLight,
-    tabIconSelected: tintColorLight,
+    tabIconSelected: AyurvedaColors.herbalGreen, // Was tintColorLight
     card: AyurvedaColors.surfaceLight,
     border: AyurvedaColors.mutedSage,
     accent: AyurvedaColors.accent,
-    link: AyurvedaColors.primary,
+    link: AyurvedaColors.herbalGreen, // Consistent with tint
     // Header colors for ParallaxScrollView
     headerBackground: AyurvedaColors.gradientStart,
-    headerIcon: AyurvedaColors.primary,
+    headerIcon: AyurvedaColors.herbalGreen,
   },
   dark: {
     text: AyurvedaColors.textDark,
