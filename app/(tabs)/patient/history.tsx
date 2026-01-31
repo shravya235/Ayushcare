@@ -1,6 +1,7 @@
 import { AyurvedaColors } from '@/constants/theme';
 import { useTheme } from '@/context/ThemeContext';
 import { Ionicons } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
@@ -107,8 +108,16 @@ export default function HealthHistory() {
   );
 
   return (
-    <View style={[styles.container, isDark && { backgroundColor: AyurvedaColors.backgroundDark }]}>
-      <View style={[styles.header, isDark && { backgroundColor: AyurvedaColors.backgroundDark }]}>
+    <LinearGradient
+      colors={isDark 
+        ? [AyurvedaColors.backgroundDark, AyurvedaColors.backgroundDark] as const
+        : ['#C5B4E3', '#D9CEE8', '#E8DFF0', '#F4F1F8'] as const
+      }
+      style={styles.container}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 0, y: 1 }}
+    >
+      <View style={[styles.header, isDark && { backgroundColor: 'transparent' }]}>
         <TouchableOpacity
           style={styles.backButton}
           onPress={() => router.push('/(tabs)/patient/dashboard' as any)}
@@ -120,7 +129,7 @@ export default function HealthHistory() {
       </View>
 
       {/* Tabs */}
-      <View style={[styles.tabsContainer, isDark && { backgroundColor: AyurvedaColors.backgroundDark }]}>
+      <View style={[styles.tabsContainer, isDark && { backgroundColor: 'transparent' }]}>
         <TouchableOpacity
           style={[
             styles.tab,
@@ -187,14 +196,13 @@ export default function HealthHistory() {
           showsVerticalScrollIndicator={false}
         />
       )}
-    </View>
+    </LinearGradient>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5F5F5',
   },
   header: {
     flexDirection: 'row',
@@ -203,7 +211,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop: 60,
     paddingBottom: 16,
-    backgroundColor: '#ffffff',
+    backgroundColor: 'transparent',
   },
   backButton: {
     padding: 4,
@@ -215,7 +223,7 @@ const styles = StyleSheet.create({
   },
   tabsContainer: {
     flexDirection: 'row',
-    backgroundColor: '#ffffff',
+    backgroundColor: 'transparent',
     paddingHorizontal: 20,
     paddingBottom: 16,
   },

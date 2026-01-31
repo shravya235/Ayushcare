@@ -3,7 +3,7 @@ import { useTheme } from '@/context/ThemeContext';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ImageBackground, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 // Define question types
 type Question = {
@@ -151,10 +151,11 @@ export default function AssessmentQuestions() {
   const totalQuestions = questions.length;
   const progress = ((currentQuestionIndex + 1) / totalQuestions) * 100;
 
+  // Softer, more elegant dosha colors
   const doshaColors = {
-    vata: '#93C5FD',
-    pitta: '#FCA5A5',
-    kapha: '#86EFAC',
+    vata: '#C5B4E3', // Soft lavender purple
+    pitta: '#F4C2C2', // Soft peachy pink
+    kapha: '#B8D4B8', // Soft sage green
   };
 
   const handleOptionSelect = (dosha: string) => {
@@ -208,9 +209,16 @@ export default function AssessmentQuestions() {
   const isAnswered = answers[currentQuestion.id] !== undefined;
 
   return (
-    <View style={[styles.container, isDark && { backgroundColor: AyurvedaColors.backgroundDark }]}>
+    <ImageBackground
+      source={require('@/assets/images/eye.jpg')}
+      style={styles.container}
+      resizeMode="cover"
+    >
+      {/* Semi-transparent overlay */}
+      <View style={[styles.overlay, isDark && { backgroundColor: 'rgba(0, 0, 0, 0.7)' }]} />
+      
       {/* Header */}
-      <View style={[styles.header, isDark && { backgroundColor: AyurvedaColors.backgroundDark, borderBottomColor: AyurvedaColors.secondaryDark }]}>
+      <View style={[styles.header, isDark && { backgroundColor: 'transparent', borderBottomColor: 'rgba(255, 255, 255, 0.1)' }]}>
         <TouchableOpacity onPress={() => router.push('/(tabs)/patient/assessment' as any)} style={styles.backButton}>
           <Ionicons name="arrow-back" size={24} color={isDark ? AyurvedaColors.textDark : "#2C3E50"} />
         </TouchableOpacity>
@@ -224,7 +232,7 @@ export default function AssessmentQuestions() {
           <Text style={[styles.title, isDark && { color: AyurvedaColors.textDark }]}>Ayurvedic Assessment</Text>
           <Text style={[styles.subtitle, isDark && { color: AyurvedaColors.textDarkMuted }]}>Answer honestly for best results</Text>
 
-          <View style={[styles.progressBarContainer, isDark && { backgroundColor: AyurvedaColors.backgroundDarkAlt }]}>
+          <View style={[styles.progressBarContainer, isDark && { backgroundColor: 'rgba(255, 255, 255, 0.1)' }]}>
             <View style={[styles.progressBar, { width: `${progress}%` }, isDark && { backgroundColor: AyurvedaColors.gradientStart }]} />
           </View>
 
@@ -234,7 +242,7 @@ export default function AssessmentQuestions() {
         </View>
 
         {/* Question Card */}
-        <View style={[styles.questionCard, isDark && { backgroundColor: AyurvedaColors.backgroundDarkAlt, shadowColor: '#000' }]}>
+        <View style={[styles.questionCard, isDark && { backgroundColor: 'rgba(30, 30, 30, 0.85)', shadowColor: '#000' }]}>
           <Text style={[styles.questionNumber, isDark && { color: AyurvedaColors.textDarkMuted }]}>
             Q{currentQuestionIndex + 1} of {totalQuestions}
           </Text>
@@ -249,13 +257,13 @@ export default function AssessmentQuestions() {
                   key={index}
                   style={[
                     styles.optionButton,
-                    isDark && { backgroundColor: AyurvedaColors.primaryDark, borderColor: AyurvedaColors.textMuted },
+                    isDark && { backgroundColor: 'rgba(255, 255, 255, 0.05)', borderColor: 'rgba(255, 255, 255, 0.1)' },
                     isSelected && {
                       backgroundColor: doshaColors[option.dosha],
                       borderColor: doshaColors[option.dosha],
                     },
                     isSelected && isDark && {
-                      backgroundColor: doshaColors[option.dosha], // Keep colorful selection
+                      backgroundColor: doshaColors[option.dosha],
                       borderColor: doshaColors[option.dosha],
                     }
                   ]}
@@ -275,7 +283,7 @@ export default function AssessmentQuestions() {
                       styles.optionText,
                       isDark && { color: AyurvedaColors.textDark },
                       isSelected && styles.optionTextSelected,
-                      isSelected && { color: '#2C3E50' }, // Keep dark text on pastel options
+                      isSelected && { color: '#2C3E50' },
                     ]}
                   >
                     {option.text}
@@ -288,15 +296,15 @@ export default function AssessmentQuestions() {
           {/* Dosha Legend */}
           <View style={styles.doshaLegend}>
             <View style={styles.doshaItem}>
-              <View style={[styles.doshaCircle, { backgroundColor: '#93C5FD' }]} />
+              <View style={[styles.doshaCircle, { backgroundColor: '#C5B4E3' }]} />
               <Text style={[styles.doshaLabel, isDark && { color: AyurvedaColors.textDarkMuted }]}>Vata</Text>
             </View>
             <View style={styles.doshaItem}>
-              <View style={[styles.doshaCircle, { backgroundColor: '#FCA5A5' }]} />
+              <View style={[styles.doshaCircle, { backgroundColor: '#F4C2C2' }]} />
               <Text style={[styles.doshaLabel, isDark && { color: AyurvedaColors.textDarkMuted }]}>Pitta</Text>
             </View>
             <View style={styles.doshaItem}>
-              <View style={[styles.doshaCircle, { backgroundColor: '#86EFAC' }]} />
+              <View style={[styles.doshaCircle, { backgroundColor: '#B8D4B8' }]} />
               <Text style={[styles.doshaLabel, isDark && { color: AyurvedaColors.textDarkMuted }]}>Kapha</Text>
             </View>
           </View>
@@ -304,14 +312,14 @@ export default function AssessmentQuestions() {
       </ScrollView>
 
       {/* Bottom Navigation */}
-      <View style={[styles.bottomNav, isDark && { backgroundColor: AyurvedaColors.backgroundDark, borderTopColor: AyurvedaColors.secondaryDark }]}>
+      <View style={[styles.bottomNav, isDark && { backgroundColor: 'rgba(30, 30, 30, 0.9)', borderTopColor: 'rgba(255, 255, 255, 0.1)' }]}>
         <TouchableOpacity
           style={[
             styles.navButton,
             styles.previousButton,
-            isDark && { backgroundColor: AyurvedaColors.backgroundDark, borderColor: AyurvedaColors.textMuted },
+            isDark && { backgroundColor: 'transparent', borderColor: 'rgba(255, 255, 255, 0.2)' },
             currentQuestionIndex === 0 && styles.navButtonDisabled,
-            currentQuestionIndex === 0 && isDark && { borderColor: AyurvedaColors.backgroundDarkAlt }
+            currentQuestionIndex === 0 && isDark && { borderColor: 'rgba(255, 255, 255, 0.05)' }
           ]}
           onPress={handlePrevious}
           disabled={currentQuestionIndex === 0}
@@ -333,7 +341,7 @@ export default function AssessmentQuestions() {
             styles.nextButton,
             isDark && { backgroundColor: AyurvedaColors.primaryLight },
             !isAnswered && styles.navButtonDisabled,
-            !isAnswered && isDark && { backgroundColor: AyurvedaColors.backgroundDarkAlt }
+            !isAnswered && isDark && { backgroundColor: 'rgba(255, 255, 255, 0.1)' }
           ]}
           onPress={handleNext}
           disabled={!isAnswered}
@@ -349,14 +357,17 @@ export default function AssessmentQuestions() {
           </Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5F5F5',
+  },
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(255, 255, 255, 0.85)', // Semi-transparent white overlay for light mode
   },
   header: {
     flexDirection: 'row',
@@ -365,7 +376,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop: 60,
     paddingBottom: 16,
-    backgroundColor: '#ffffff',
+    backgroundColor: 'transparent',
   },
   backButton: {
     padding: 4,
@@ -395,7 +406,7 @@ const styles = StyleSheet.create({
   },
   progressBarContainer: {
     height: 8,
-    backgroundColor: '#E0E0E0',
+    backgroundColor: 'rgba(0, 0, 0, 0.1)',
     borderRadius: 4,
     overflow: 'hidden',
     marginBottom: 8,
@@ -410,7 +421,7 @@ const styles = StyleSheet.create({
     color: '#5F6F65',
   },
   questionCard: {
-    backgroundColor: '#ffffff',
+    backgroundColor: 'rgba(255, 255, 255, 0.9)',
     borderRadius: 16,
     padding: 24,
     shadowColor: '#000',
@@ -435,7 +446,7 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   optionButton: {
-    backgroundColor: '#F5F5F5',
+    backgroundColor: 'rgba(245, 245, 245, 0.8)',
     borderRadius: 12,
     padding: 16,
     borderWidth: 2,
@@ -477,7 +488,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     padding: 20,
     gap: 12,
-    backgroundColor: '#ffffff',
+    backgroundColor: 'rgba(255, 255, 255, 0.95)',
     borderTopWidth: 1,
     borderTopColor: '#E0E0E0',
   },
@@ -489,7 +500,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   previousButton: {
-    backgroundColor: '#ffffff',
+    backgroundColor: 'transparent',
     borderWidth: 2,
     borderColor: '#E0E0E0',
   },

@@ -1,6 +1,7 @@
 import { AyurvedaColors } from '@/constants/theme';
 import { useTheme } from '@/context/ThemeContext';
 import { Ionicons } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
@@ -42,114 +43,126 @@ export default function Results() {
   };
 
   return (
-    <ScrollView style={[styles.container, isDark && { backgroundColor: AyurvedaColors.backgroundDark }]}>
-      <View style={styles.content}>
-        {/* Header */}
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => router.push('/(tabs)/patient/dashboard' as any)}
-        >
-          <Ionicons name="arrow-back" size={24} color={isDark ? AyurvedaColors.textDark : "#2C3E50"} />
-        </TouchableOpacity>
+    <LinearGradient
+      colors={isDark 
+        ? [AyurvedaColors.backgroundDark, AyurvedaColors.backgroundDark] as const
+        : ['#C5B4E3', '#D9CEE8', '#E8DFF0', '#F4F1F8'] as const
+      }
+      style={styles.container}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 0, y: 1 }}
+    >
+      <ScrollView style={styles.scrollView}>
+        <View style={styles.content}>
+          {/* Header */}
+          <TouchableOpacity
+            style={styles.backButton}
+            onPress={() => router.push('/(tabs)/patient/dashboard' as any)}
+          >
+            <Ionicons name="arrow-back" size={24} color={isDark ? AyurvedaColors.textDark : "#2C3E50"} />
+          </TouchableOpacity>
 
-        <Text style={[styles.title, isDark && { color: AyurvedaColors.textDark }]}>Your Dosha Analysis</Text>
-        <Text style={[styles.subtitle, isDark && { color: AyurvedaColors.textDarkMuted }]}>
-          Based on your assessment results
-        </Text>
-
-        {/* Last Assessment Date */}
-        <View style={[styles.dateCard, isDark && { backgroundColor: AyurvedaColors.backgroundDarkAlt }]}>
-          <Ionicons name="calendar-outline" size={20} color={isDark ? AyurvedaColors.accent : "#5A8F69"} />
-          <Text style={[styles.dateText, isDark && { color: AyurvedaColors.textDark }]}>Last assessed: {new Date().toLocaleDateString()}</Text>
-        </View>
-
-        {/* Dosha Results */}
-        <View style={[styles.resultsCard, isDark && { backgroundColor: AyurvedaColors.backgroundDarkAlt, shadowColor: '#000' }]}>
-          <Text style={[styles.sectionTitle, isDark && { color: AyurvedaColors.textDark }]}>Your Dosha Constitution</Text>
-
-          {doshaResults.map((dosha) => (
-            <View key={dosha.name} style={styles.doshaRow}>
-              <View style={styles.doshaInfo}>
-                <Text style={[styles.doshaName, isDark && { color: AyurvedaColors.textDark }]}>{dosha.name}</Text>
-                <Text style={[styles.doshaPercentage, isDark && { color: AyurvedaColors.textDark }]}>{dosha.percentage}%</Text>
-              </View>
-              <View style={[styles.progressBarContainer, isDark && { backgroundColor: AyurvedaColors.backgroundDark }]}>
-                <View
-                  style={[
-                    styles.progressBar,
-                    { width: `${dosha.percentage}%`, backgroundColor: dosha.color }
-                  ]}
-                />
-              </View>
-            </View>
-          ))}
-        </View>
-
-        {/* Dominant Dosha Card */}
-        <View style={[
-          styles.dominantCard,
-          isDark && { backgroundColor: 'rgba(255, 215, 0, 0.1)', borderColor: '#FFD700' }
-        ]}>
-          <View style={styles.dominantHeader}>
-            <Ionicons name="star" size={24} color="#FFD700" />
-            <Text style={[styles.dominantTitle, isDark && { color: AyurvedaColors.textDark }]}>Your Dominant Dosha</Text>
-          </View>
-          <Text style={[styles.dominantDosha, isDark && { color: AyurvedaColors.accentLight }]}>{dominantDoshaDisplay}</Text>
-          <Text style={[styles.dominantDescription, isDark && { color: AyurvedaColors.textDarkMuted }]}>
-            {dominantDescriptions[dominantDosha]}
+          <Text style={[styles.title, isDark && { color: AyurvedaColors.textDark }]}>Your Dosha Analysis</Text>
+          <Text style={[styles.subtitle, isDark && { color: AyurvedaColors.textDarkMuted }]}>
+            Based on your assessment results
           </Text>
-        </View>
 
-        {/* Recommendations */}
-        <View style={[styles.recommendationsCard, isDark && { backgroundColor: AyurvedaColors.backgroundDarkAlt, shadowColor: '#000' }]}>
-          <Text style={[styles.sectionTitle, isDark && { color: AyurvedaColors.textDark }]}>Personalized Recommendations</Text>
+          {/* Last Assessment Date */}
+          <View style={[styles.dateCard, isDark && { backgroundColor: AyurvedaColors.backgroundDarkAlt }]}>
+            <Ionicons name="calendar-outline" size={20} color={isDark ? AyurvedaColors.accent : "#5A8F69"} />
+            <Text style={[styles.dateText, isDark && { color: AyurvedaColors.textDark }]}>Last assessed: {new Date().toLocaleDateString()}</Text>
+          </View>
 
-          {[
-            {
-              icon: 'restaurant-outline',
-              title: 'Diet',
-              description: 'Favor warm, cooked foods and avoid cold, raw items'
-            },
-            {
-              icon: 'fitness-outline',
-              title: 'Exercise',
-              description: 'Gentle yoga and walking are ideal for your constitution'
-            },
-            {
-              icon: 'bed-outline',
-              title: 'Lifestyle',
-              description: 'Maintain regular routine and get adequate rest'
-            },
-          ].map((rec, index) => (
-            <View key={index} style={styles.recommendationItem}>
-              <View style={[styles.recIcon, isDark && { backgroundColor: AyurvedaColors.backgroundDark }]}>
-                <Ionicons name={rec.icon as any} size={24} color={isDark ? AyurvedaColors.accent : "#5A8F69"} />
+          {/* Dosha Results */}
+          <View style={[styles.resultsCard, isDark && { backgroundColor: AyurvedaColors.backgroundDarkAlt, shadowColor: '#000' }]}>
+            <Text style={[styles.sectionTitle, isDark && { color: AyurvedaColors.textDark }]}>Your Dosha Constitution</Text>
+
+            {doshaResults.map((dosha) => (
+              <View key={dosha.name} style={styles.doshaRow}>
+                <View style={styles.doshaInfo}>
+                  <Text style={[styles.doshaName, isDark && { color: AyurvedaColors.textDark }]}>{dosha.name}</Text>
+                  <Text style={[styles.doshaPercentage, isDark && { color: AyurvedaColors.textDark }]}>{dosha.percentage}%</Text>
+                </View>
+                <View style={[styles.progressBarContainer, isDark && { backgroundColor: AyurvedaColors.backgroundDark }]}>
+                  <View
+                    style={[
+                      styles.progressBar,
+                      { width: `${dosha.percentage}%`, backgroundColor: dosha.color }
+                    ]}
+                  />
+                </View>
               </View>
-              <View style={styles.recContent}>
-                <Text style={[styles.recTitle, isDark && { color: AyurvedaColors.textDark }]}>{rec.title}</Text>
-                <Text style={[styles.recDescription, isDark && { color: AyurvedaColors.textDarkMuted }]}>{rec.description}</Text>
-              </View>
+            ))}
+          </View>
+
+          {/* Dominant Dosha Card */}
+          <View style={[
+            styles.dominantCard,
+            isDark && { backgroundColor: 'rgba(255, 215, 0, 0.1)', borderColor: '#FFD700' }
+          ]}>
+            <View style={styles.dominantHeader}>
+              <Ionicons name="star" size={24} color="#FFD700" />
+              <Text style={[styles.dominantTitle, isDark && { color: AyurvedaColors.textDark }]}>Your Dominant Dosha</Text>
             </View>
-          ))}
-        </View>
+            <Text style={[styles.dominantDosha, isDark && { color: AyurvedaColors.accentLight }]}>{dominantDoshaDisplay}</Text>
+            <Text style={[styles.dominantDescription, isDark && { color: AyurvedaColors.textDarkMuted }]}>
+              {dominantDescriptions[dominantDosha]}
+            </Text>
+          </View>
 
-        {/* Retake Assessment Button */}
-        <TouchableOpacity
-          style={[styles.retakeButton, isDark && { backgroundColor: AyurvedaColors.backgroundDark, borderColor: AyurvedaColors.primaryLight }]}
-          onPress={() => router.push('/patient/assessment' as any)}
-        >
-          <Ionicons name="refresh-outline" size={20} color={isDark ? AyurvedaColors.primaryLight : "#5A8F69"} />
-          <Text style={[styles.retakeButtonText, isDark && { color: AyurvedaColors.primaryLight }]}>Retake Assessment</Text>
-        </TouchableOpacity>
-      </View>
-    </ScrollView>
+          {/* Recommendations */}
+          <View style={[styles.recommendationsCard, isDark && { backgroundColor: AyurvedaColors.backgroundDarkAlt, shadowColor: '#000' }]}>
+            <Text style={[styles.sectionTitle, isDark && { color: AyurvedaColors.textDark }]}>Personalized Recommendations</Text>
+
+            {[
+              {
+                icon: 'restaurant-outline',
+                title: 'Diet',
+                description: 'Favor warm, cooked foods and avoid cold, raw items'
+              },
+              {
+                icon: 'fitness-outline',
+                title: 'Exercise',
+                description: 'Gentle yoga and walking are ideal for your constitution'
+              },
+              {
+                icon: 'bed-outline',
+                title: 'Lifestyle',
+                description: 'Maintain regular routine and get adequate rest'
+              },
+            ].map((rec, index) => (
+              <View key={index} style={styles.recommendationItem}>
+                <View style={[styles.recIcon, isDark && { backgroundColor: AyurvedaColors.backgroundDark }]}>
+                  <Ionicons name={rec.icon as any} size={24} color={isDark ? AyurvedaColors.accent : "#5A8F69"} />
+                </View>
+                <View style={styles.recContent}>
+                  <Text style={[styles.recTitle, isDark && { color: AyurvedaColors.textDark }]}>{rec.title}</Text>
+                  <Text style={[styles.recDescription, isDark && { color: AyurvedaColors.textDarkMuted }]}>{rec.description}</Text>
+                </View>
+              </View>
+            ))}
+          </View>
+
+          {/* Retake Assessment Button */}
+          <TouchableOpacity
+            style={[styles.retakeButton, isDark && { backgroundColor: AyurvedaColors.backgroundDark, borderColor: AyurvedaColors.primaryLight }]}
+            onPress={() => router.push('/patient/assessment' as any)}
+          >
+            <Ionicons name="refresh-outline" size={20} color={isDark ? AyurvedaColors.primaryLight : "#5A8F69"} />
+            <Text style={[styles.retakeButtonText, isDark && { color: AyurvedaColors.primaryLight }]}>Retake Assessment</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </LinearGradient>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5F5F5',
+  },
+  scrollView: {
+    flex: 1,
   },
   content: {
     padding: 20,

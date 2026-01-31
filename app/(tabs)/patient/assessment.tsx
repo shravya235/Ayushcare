@@ -1,6 +1,7 @@
 import { AyurvedaColors } from '@/constants/theme';
 import { useTheme } from '@/context/ThemeContext';
 import { Ionicons } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import React from 'react';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
@@ -11,73 +12,85 @@ export default function Assessment() {
   const isDark = theme === 'dark';
 
   return (
-    <ScrollView style={[styles.container, isDark && { backgroundColor: AyurvedaColors.backgroundDark }]}>
-      <View style={styles.content}>
-        {/* Header */}
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => router.push('/(tabs)/patient/dashboard' as any)}
-        >
-          <Ionicons name="arrow-back" size={24} color={isDark ? AyurvedaColors.textDark : "#2C3E50"} />
-        </TouchableOpacity>
+    <LinearGradient
+      colors={isDark 
+        ? [AyurvedaColors.backgroundDark, AyurvedaColors.backgroundDark] as const
+        : ['#C5B4E3', '#D9CEE8', '#E8DFF0', '#F4F1F8'] as const
+      }
+      style={styles.container}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 0, y: 1 }}
+    >
+      <ScrollView style={styles.scrollView}>
+        <View style={styles.content}>
+          {/* Header */}
+          <TouchableOpacity
+            style={styles.backButton}
+            onPress={() => router.push('/(tabs)/patient/dashboard' as any)}
+          >
+            <Ionicons name="arrow-back" size={24} color={isDark ? AyurvedaColors.textDark : "#2C3E50"} />
+          </TouchableOpacity>
 
-        <Text style={[styles.title, isDark && { color: AyurvedaColors.textDark }]}>Start Assessment</Text>
-        <Text style={[styles.subtitle, isDark && { color: AyurvedaColors.textDarkMuted }]}>
-          Understand your dosha balance through our comprehensive assessment
-        </Text>
-
-        {/* Assessment Info Card */}
-        <View style={[styles.infoCard, isDark && { backgroundColor: AyurvedaColors.primaryDark }]}>
-          <Ionicons name="information-circle-outline" size={24} color={isDark ? AyurvedaColors.accent : "#5A8F69"} />
-          <Text style={[styles.infoText, isDark && { color: AyurvedaColors.textDark }]}>
-            This assessment will take approximately 10-15 minutes to complete.
-            Answer honestly for the most accurate results.
+          <Text style={[styles.title, isDark && { color: AyurvedaColors.textDark }]}>Start Assessment</Text>
+          <Text style={[styles.subtitle, isDark && { color: AyurvedaColors.textDarkMuted }]}>
+            Understand your dosha balance through our comprehensive assessment
           </Text>
-        </View>
 
-        {/* Assessment Categories */}
-        <View style={styles.categoriesContainer}>
-          <Text style={[styles.sectionTitle, isDark && { color: AyurvedaColors.textDark }]}>Assessment Categories</Text>
+          {/* Assessment Info Card */}
+          <View style={[styles.infoCard, isDark && { backgroundColor: AyurvedaColors.primaryDark }]}>
+            <Ionicons name="information-circle-outline" size={24} color={isDark ? AyurvedaColors.accent : "#5A8F69"} />
+            <Text style={[styles.infoText, isDark && { color: AyurvedaColors.textDark }]}>
+              This assessment will take approximately 10-15 minutes to complete.
+              Answer honestly for the most accurate results.
+            </Text>
+          </View>
 
-          {[
-            { title: 'Physical Characteristics', questions: 12 },
-            { title: 'Mental & Emotional Traits', questions: 10 },
-            { title: 'Lifestyle & Habits', questions: 8 },
-            { title: 'Digestive System', questions: 6 },
-          ].map((category, index) => (
-            <View key={index} style={[styles.categoryCard, isDark && { backgroundColor: AyurvedaColors.backgroundDarkAlt, shadowColor: '#000' }]}>
-              <View style={[styles.categoryIcon, isDark && { backgroundColor: 'rgba(255, 255, 255, 0.1)' }]}>
-                <Ionicons name="checkmark-circle-outline" size={28} color={isDark ? AyurvedaColors.accentMuted : "#5A8F69"} />
+          {/* Assessment Categories */}
+          <View style={styles.categoriesContainer}>
+            <Text style={[styles.sectionTitle, isDark && { color: AyurvedaColors.textDark }]}>Assessment Categories</Text>
+
+            {[
+              { title: 'Physical Characteristics', questions: 12 },
+              { title: 'Mental & Emotional Traits', questions: 10 },
+              { title: 'Lifestyle & Habits', questions: 8 },
+              { title: 'Digestive System', questions: 6 },
+            ].map((category, index) => (
+              <View key={index} style={[styles.categoryCard, isDark && { backgroundColor: AyurvedaColors.backgroundDarkAlt, shadowColor: '#000' }]}>
+                <View style={[styles.categoryIcon, isDark && { backgroundColor: 'rgba(255, 255, 255, 0.1)' }]}>
+                  <Ionicons name="checkmark-circle-outline" size={28} color={isDark ? AyurvedaColors.accentMuted : "#5A8F69"} />
+                </View>
+                <View style={styles.categoryInfo}>
+                  <Text style={[styles.categoryTitle, isDark && { color: AyurvedaColors.textDark }]}>{category.title}</Text>
+                  <Text style={[styles.categoryQuestions, isDark && { color: AyurvedaColors.textDarkMuted }]}>
+                    {category.questions} questions
+                  </Text>
+                </View>
               </View>
-              <View style={styles.categoryInfo}>
-                <Text style={[styles.categoryTitle, isDark && { color: AyurvedaColors.textDark }]}>{category.title}</Text>
-                <Text style={[styles.categoryQuestions, isDark && { color: AyurvedaColors.textDarkMuted }]}>
-                  {category.questions} questions
-                </Text>
-              </View>
-            </View>
-          ))}
-        </View>
+            ))}
+          </View>
 
-        {/* Start Button */}
-        <TouchableOpacity
-          style={[styles.startButton, isDark && { backgroundColor: AyurvedaColors.primary }]}
-          onPress={() => {
-            router.push('/(tabs)/patient/assessment-questions' as any);
-          }}
-        >
-          <Text style={styles.startButtonText}>Begin Assessment</Text>
-          <Ionicons name="arrow-forward" size={20} color="#ffffff" />
-        </TouchableOpacity>
-      </View>
-    </ScrollView>
+          {/* Start Button */}
+          <TouchableOpacity
+            style={[styles.startButton, isDark && { backgroundColor: AyurvedaColors.primary }]}
+            onPress={() => {
+              router.push('/(tabs)/patient/assessment-questions' as any);
+            }}
+          >
+            <Text style={styles.startButtonText}>Begin Assessment</Text>
+            <Ionicons name="arrow-forward" size={20} color="#ffffff" />
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </LinearGradient>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5F5F5',
+  },
+  scrollView: {
+    flex: 1,
   },
   content: {
     padding: 20,

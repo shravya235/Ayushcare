@@ -224,7 +224,11 @@ export default function PatientDashboard() {
             {dashboardCards.map((card) => (
               <TouchableOpacity
                 key={card.id}
-                style={[styles.card, { backgroundColor: isDark ? AyurvedaColors.surfaceDark : card.color }]}
+                style={[
+                  styles.card, 
+                  { backgroundColor: isDark ? AyurvedaColors.surfaceDark : card.color },
+                  isDark && styles.cardDarkBorder
+                ]}
                 onPress={() => router.push(card.route as any)}
                 activeOpacity={0.7}
               >
@@ -360,6 +364,10 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 3,
+  },
+  cardDarkBorder: {
+    borderWidth: 1,
+    borderColor: 'rgba(255, 215, 0, 0.3)', // Light golden border with 30% opacity
   },
   iconContainer: {
     width: 56,
