@@ -39,6 +39,13 @@ export default function TabLayout() {
           href: null, // Hide from tabs
         }}
       />
+
+      <Tabs.Screen
+        name="practitioner"
+        options={{
+          href: null, // Hide from tabs
+        }}
+      />
     </Tabs>
   );
 }

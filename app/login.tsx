@@ -201,7 +201,7 @@ export default function LoginScreen() {
         if (selectedRole === 'patient') {
             router.replace('/(tabs)/patient/dashboard' as any);
         } else {
-            router.replace('/(tabs)');
+            router.replace('/(tabs)/practitioner/dashboard' as any);
         }
     };
 
