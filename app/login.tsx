@@ -227,7 +227,7 @@ export default function LoginScreen() {
         // Navigate based on selected role
         if (selectedRole === 'patient') {
             // TODO: Replace with actual patient dashboard route
-            router.replace('/(tabs)');
+            router.replace('/(tabs)/patient/dashboard' as any);
         } else {
             // TODO: Replace with actual practitioner dashboard route
             router.replace('/(tabs)');
