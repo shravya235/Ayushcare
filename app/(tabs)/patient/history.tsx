@@ -1,3 +1,5 @@
+import { AyurvedaColors } from '@/constants/theme';
+import { useTheme } from '@/context/ThemeContext';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
@@ -5,6 +7,8 @@ import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native
 
 export default function HealthHistory() {
   const router = useRouter();
+  const { theme } = useTheme();
+  const isDark = theme === 'dark';
   const [activeTab, setActiveTab] = useState<'logs' | 'assessments'>('logs');
 
   const healthLogs = [
@@ -56,90 +60,110 @@ export default function HealthHistory() {
   ];
 
   const renderLogItem = ({ item }: { item: typeof healthLogs[0] }) => (
-    <TouchableOpacity style={styles.logCard}>
-      <View style={styles.logHeader}>
-        <Text style={styles.logDate}>{item.date}</Text>
-        <Ionicons name="chevron-forward" size={20} color="#5F6F65" />
+    <TouchableOpacity style={[styles.logCard, isDark && { backgroundColor: AyurvedaColors.backgroundDarkAlt, shadowColor: '#000' }]}>
+      <View style={[styles.logHeader, isDark && { borderBottomColor: AyurvedaColors.secondaryDark }]}>
+        <Text style={[styles.logDate, isDark && { color: AyurvedaColors.textDark }]}>{item.date}</Text>
+        <Ionicons name="chevron-forward" size={20} color={isDark ? AyurvedaColors.textDarkMuted : "#5F6F65"} />
       </View>
       <View style={styles.logContent}>
         <View style={styles.logRow}>
-          <Text style={styles.logLabel}>Mood:</Text>
-          <Text style={styles.logValue}>{item.mood}</Text>
+          <Text style={[styles.logLabel, isDark && { color: AyurvedaColors.textDarkMuted }]}>Mood:</Text>
+          <Text style={[styles.logValue, isDark && { color: AyurvedaColors.textDark }]}>{item.mood}</Text>
         </View>
         <View style={styles.logRow}>
-          <Text style={styles.logLabel}>Sleep:</Text>
-          <Text style={styles.logValue}>{item.sleep}</Text>
+          <Text style={[styles.logLabel, isDark && { color: AyurvedaColors.textDarkMuted }]}>Sleep:</Text>
+          <Text style={[styles.logValue, isDark && { color: AyurvedaColors.textDark }]}>{item.sleep}</Text>
         </View>
-        <Text style={styles.logNotes}>{item.notes}</Text>
+        <Text style={[styles.logNotes, isDark && { color: AyurvedaColors.textDarkMuted }]}>{item.notes}</Text>
       </View>
     </TouchableOpacity>
   );
 
   const renderAssessmentItem = ({ item }: { item: typeof assessmentHistory[0] }) => (
-    <TouchableOpacity style={styles.assessmentCard}>
+    <TouchableOpacity style={[styles.assessmentCard, isDark && { backgroundColor: AyurvedaColors.backgroundDarkAlt, shadowColor: '#000' }]}>
       <View style={styles.assessmentHeader}>
-        <Text style={styles.assessmentDate}>{item.date}</Text>
+        <Text style={[styles.assessmentDate, isDark && { color: AyurvedaColors.textDark }]}>{item.date}</Text>
         <View style={[styles.dominantBadge, { backgroundColor: item.color }]}>
           <Text style={styles.dominantBadgeText}>{item.dominant}</Text>
         </View>
       </View>
       <View style={styles.assessmentContent}>
-        <Text style={styles.assessmentLabel}>Dominant Dosha</Text>
-        <View style={styles.progressBarContainer}>
-          <View 
+        <Text style={[styles.assessmentLabel, isDark && { color: AyurvedaColors.textDarkMuted }]}>Dominant Dosha</Text>
+        <View style={[styles.progressBarContainer, isDark && { backgroundColor: AyurvedaColors.backgroundDark }]}>
+          <View
             style={[
-              styles.progressBar, 
+              styles.progressBar,
               { width: `${item.percentage}%`, backgroundColor: item.color }
-            ]} 
+            ]}
           />
         </View>
         <Text style={styles.assessmentPercentage}>{item.percentage}%</Text>
       </View>
-      <TouchableOpacity style={styles.viewDetailsButton}>
-        <Text style={styles.viewDetailsText}>View Full Results</Text>
-        <Ionicons name="arrow-forward" size={16} color="#5A8F69" />
+      <TouchableOpacity style={[styles.viewDetailsButton, isDark && { borderTopColor: AyurvedaColors.secondaryDark }]}>
+        <Text style={[styles.viewDetailsText, isDark && { color: AyurvedaColors.accent }]}>View Full Results</Text>
+        <Ionicons name="arrow-forward" size={16} color={isDark ? AyurvedaColors.accent : "#5A8F69"} />
       </TouchableOpacity>
     </TouchableOpacity>
   );
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity 
+    <View style={[styles.container, isDark && { backgroundColor: AyurvedaColors.backgroundDark }]}>
+      <View style={[styles.header, isDark && { backgroundColor: AyurvedaColors.backgroundDark }]}>
+        <TouchableOpacity
           style={styles.backButton}
           onPress={() => router.push('/(tabs)/patient/dashboard' as any)}
         >
-          <Ionicons name="arrow-back" size={24} color="#2C3E50" />
+          <Ionicons name="arrow-back" size={24} color={isDark ? AyurvedaColors.textDark : "#2C3E50"} />
         </TouchableOpacity>
-        <Text style={styles.title}>Health History</Text>
+        <Text style={[styles.title, isDark && { color: AyurvedaColors.textDark }]}>Health History</Text>
         <View style={{ width: 24 }} />
       </View>
 
       {/* Tabs */}
-      <View style={styles.tabsContainer}>
+      <View style={[styles.tabsContainer, isDark && { backgroundColor: AyurvedaColors.backgroundDark }]}>
         <TouchableOpacity
-          style={[styles.tab, activeTab === 'logs' && styles.tabActive]}
+          style={[
+            styles.tab,
+            isDark && { backgroundColor: AyurvedaColors.backgroundDarkAlt },
+            activeTab === 'logs' && !isDark && styles.tabActive,
+            activeTab === 'logs' && isDark && { backgroundColor: AyurvedaColors.primaryDark }
+          ]}
           onPress={() => setActiveTab('logs')}
         >
-          <Ionicons 
-            name="heart-outline" 
-            size={20} 
-            color={activeTab === 'logs' ? '#5A8F69' : '#5F6F65'} 
+          <Ionicons
+            name="heart-outline"
+            size={20}
+            color={activeTab === 'logs' ? (isDark ? AyurvedaColors.accent : '#5A8F69') : (isDark ? AyurvedaColors.textDarkMuted : '#5F6F65')}
           />
-          <Text style={[styles.tabText, activeTab === 'logs' && styles.tabTextActive]}>
+          <Text style={[
+            styles.tabText,
+            isDark && { color: AyurvedaColors.textDarkMuted },
+            activeTab === 'logs' && !isDark && styles.tabTextActive,
+            activeTab === 'logs' && isDark && { color: AyurvedaColors.textDark }
+          ]}>
             Daily Logs
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[styles.tab, activeTab === 'assessments' && styles.tabActive]}
+          style={[
+            styles.tab,
+            isDark && { backgroundColor: AyurvedaColors.backgroundDarkAlt },
+            activeTab === 'assessments' && !isDark && styles.tabActive,
+            activeTab === 'assessments' && isDark && { backgroundColor: AyurvedaColors.primaryDark }
+          ]}
           onPress={() => setActiveTab('assessments')}
         >
-          <Ionicons 
-            name="trending-up-outline" 
-            size={20} 
-            color={activeTab === 'assessments' ? '#5A8F69' : '#5F6F65'} 
+          <Ionicons
+            name="trending-up-outline"
+            size={20}
+            color={activeTab === 'assessments' ? (isDark ? AyurvedaColors.accent : '#5A8F69') : (isDark ? AyurvedaColors.textDarkMuted : '#5F6F65')}
           />
-          <Text style={[styles.tabText, activeTab === 'assessments' && styles.tabTextActive]}>
+          <Text style={[
+            styles.tabText,
+            isDark && { color: AyurvedaColors.textDarkMuted },
+            activeTab === 'assessments' && !isDark && styles.tabTextActive,
+            activeTab === 'assessments' && isDark && { color: AyurvedaColors.textDark }
+          ]}>
             Assessments
           </Text>
         </TouchableOpacity>

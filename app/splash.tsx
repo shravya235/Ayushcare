@@ -1,4 +1,6 @@
+
 import { AyurvedaColors, Spacing } from '@/constants/theme';
+import { useTheme } from '@/context/ThemeContext';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
@@ -23,6 +25,9 @@ const ANIMATION_CONFIG = {
 };
 
 export default function SplashScreen() {
+    const { theme } = useTheme();
+    const isDark = theme === 'dark';
+
     // Background animation
     const backgroundOpacity = useRef(new Animated.Value(0)).current;
 
@@ -126,7 +131,7 @@ export default function SplashScreen() {
     return (
         <Animated.View style={[styles.animatedContainer, { opacity: backgroundOpacity }]}>
             <LinearGradient
-                colors={[AyurvedaColors.softGreen, AyurvedaColors.offWhite]}
+                colors={[AyurvedaColors.softLavender, AyurvedaColors.offWhite]}
                 style={styles.container}
                 start={{ x: 0.5, y: 0 }}
                 end={{ x: 0.5, y: 1 }}

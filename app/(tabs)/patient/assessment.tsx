@@ -1,3 +1,5 @@
+import { AyurvedaColors } from '@/constants/theme';
+import { useTheme } from '@/context/ThemeContext';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import React from 'react';
@@ -5,27 +7,29 @@ import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-nati
 
 export default function Assessment() {
   const router = useRouter();
+  const { theme } = useTheme();
+  const isDark = theme === 'dark';
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={[styles.container, isDark && { backgroundColor: AyurvedaColors.backgroundDark }]}>
       <View style={styles.content}>
         {/* Header */}
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.backButton}
           onPress={() => router.push('/(tabs)/patient/dashboard' as any)}
         >
-          <Ionicons name="arrow-back" size={24} color="#2C3E50" />
+          <Ionicons name="arrow-back" size={24} color={isDark ? AyurvedaColors.textDark : "#2C3E50"} />
         </TouchableOpacity>
 
-        <Text style={styles.title}>Start Assessment</Text>
-        <Text style={styles.subtitle}>
+        <Text style={[styles.title, isDark && { color: AyurvedaColors.textDark }]}>Start Assessment</Text>
+        <Text style={[styles.subtitle, isDark && { color: AyurvedaColors.textDarkMuted }]}>
           Understand your dosha balance through our comprehensive assessment
         </Text>
 
         {/* Assessment Info Card */}
-        <View style={styles.infoCard}>
-          <Ionicons name="information-circle-outline" size={24} color="#5A8F69" />
-          <Text style={styles.infoText}>
+        <View style={[styles.infoCard, isDark && { backgroundColor: AyurvedaColors.primaryDark }]}>
+          <Ionicons name="information-circle-outline" size={24} color={isDark ? AyurvedaColors.accent : "#5A8F69"} />
+          <Text style={[styles.infoText, isDark && { color: AyurvedaColors.textDark }]}>
             This assessment will take approximately 10-15 minutes to complete.
             Answer honestly for the most accurate results.
           </Text>
@@ -33,21 +37,21 @@ export default function Assessment() {
 
         {/* Assessment Categories */}
         <View style={styles.categoriesContainer}>
-          <Text style={styles.sectionTitle}>Assessment Categories</Text>
-          
+          <Text style={[styles.sectionTitle, isDark && { color: AyurvedaColors.textDark }]}>Assessment Categories</Text>
+
           {[
             { title: 'Physical Characteristics', questions: 12 },
             { title: 'Mental & Emotional Traits', questions: 10 },
             { title: 'Lifestyle & Habits', questions: 8 },
             { title: 'Digestive System', questions: 6 },
           ].map((category, index) => (
-            <View key={index} style={styles.categoryCard}>
-              <View style={styles.categoryIcon}>
-                <Ionicons name="checkmark-circle-outline" size={28} color="#5A8F69" />
+            <View key={index} style={[styles.categoryCard, isDark && { backgroundColor: AyurvedaColors.backgroundDarkAlt, shadowColor: '#000' }]}>
+              <View style={[styles.categoryIcon, isDark && { backgroundColor: 'rgba(255, 255, 255, 0.1)' }]}>
+                <Ionicons name="checkmark-circle-outline" size={28} color={isDark ? AyurvedaColors.accentMuted : "#5A8F69"} />
               </View>
               <View style={styles.categoryInfo}>
-                <Text style={styles.categoryTitle}>{category.title}</Text>
-                <Text style={styles.categoryQuestions}>
+                <Text style={[styles.categoryTitle, isDark && { color: AyurvedaColors.textDark }]}>{category.title}</Text>
+                <Text style={[styles.categoryQuestions, isDark && { color: AyurvedaColors.textDarkMuted }]}>
                   {category.questions} questions
                 </Text>
               </View>
@@ -56,8 +60,8 @@ export default function Assessment() {
         </View>
 
         {/* Start Button */}
-        <TouchableOpacity 
-          style={styles.startButton}
+        <TouchableOpacity
+          style={[styles.startButton, isDark && { backgroundColor: AyurvedaColors.primary }]}
           onPress={() => {
             router.push('/(tabs)/patient/assessment-questions' as any);
           }}

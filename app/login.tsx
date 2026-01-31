@@ -1,7 +1,8 @@
 import { AyurvedaColors, BorderRadius, Shadows, Spacing } from '@/constants/theme';
+import { useTheme } from '@/context/ThemeContext';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import { router } from 'expo-router';
+import { useRouter } from 'expo-router';
 import React, { useEffect, useRef, useState } from 'react';
 import {
     Animated,
@@ -41,6 +42,9 @@ export default function LoginScreen() {
     const [password, setPassword] = useState('');
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const { theme } = useTheme();
+    const isDark = theme === 'dark';
+    const router = useRouter();
 
     // Animation values - Screen fade in
     const screenOpacity = useRef(new Animated.Value(0)).current;
@@ -206,7 +210,10 @@ export default function LoginScreen() {
     // ==========================================================================
     return (
         <LinearGradient
-            colors={[AyurvedaColors.softGreen, AyurvedaColors.mutedSage, AyurvedaColors.offWhite]}
+            colors={isDark
+                ? [AyurvedaColors.backgroundDark, AyurvedaColors.backgroundDark, AyurvedaColors.backgroundDarkAlt]
+                : [AyurvedaColors.softLavender, AyurvedaColors.mutedLavender, AyurvedaColors.offWhite]
+            }
             style={styles.gradient}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
@@ -245,8 +252,8 @@ export default function LoginScreen() {
                             </View>
 
                             {/* Title */}
-                            <Text style={styles.title}>Welcome Back</Text>
-                            <Text style={styles.subtitle}>
+                            <Text style={[styles.title, isDark && { color: AyurvedaColors.textDark }]}>Welcome Back</Text>
+                            <Text style={[styles.subtitle, isDark && { color: AyurvedaColors.textDarkMuted }]}>
                                 Login to continue your Ayurvedic journey
                             </Text>
                         </Animated.View>
@@ -263,7 +270,7 @@ export default function LoginScreen() {
                                 },
                             ]}
                         >
-                            <Text style={styles.sectionLabel}>I am a</Text>
+                            <Text style={[styles.sectionLabel, isDark && { color: AyurvedaColors.textDarkMuted }]}>I am a</Text>
                             <View style={styles.roleCardsContainer}>
                                 {/* Patient Role Card */}
                                 <Animated.View
@@ -276,7 +283,9 @@ export default function LoginScreen() {
                                         onPress={() => handleRoleSelect('patient')}
                                         style={[
                                             styles.roleCard,
+                                            isDark && { backgroundColor: AyurvedaColors.backgroundDarkAlt, borderColor: AyurvedaColors.secondary },
                                             selectedRole === 'patient' && styles.roleCardSelected,
+                                            selectedRole === 'patient' && isDark && { backgroundColor: AyurvedaColors.primaryDark, borderColor: AyurvedaColors.accent },
                                         ]}
                                     >
                                         <View style={[
@@ -303,12 +312,14 @@ export default function LoginScreen() {
                                         </View>
                                         <Text style={[
                                             styles.roleCardTitle,
+                                            isDark && { color: AyurvedaColors.textDark },
                                             selectedRole === 'patient' && styles.roleCardTitleSelected,
                                         ]}>
                                             Patient
                                         </Text>
                                         <Text style={[
                                             styles.roleCardSubtitle,
+                                            isDark && { color: AyurvedaColors.textDarkMuted },
                                             selectedRole === 'patient' && styles.roleCardSubtitleSelected,
                                         ]}>
                                             Seek wellness guidance
@@ -327,7 +338,9 @@ export default function LoginScreen() {
                                         onPress={() => handleRoleSelect('practitioner')}
                                         style={[
                                             styles.roleCard,
+                                            isDark && { backgroundColor: AyurvedaColors.backgroundDarkAlt, borderColor: AyurvedaColors.secondary },
                                             selectedRole === 'practitioner' && styles.roleCardSelected,
+                                            selectedRole === 'practitioner' && isDark && { backgroundColor: AyurvedaColors.primaryDark, borderColor: AyurvedaColors.accent },
                                         ]}
                                     >
                                         <View style={[
@@ -354,12 +367,14 @@ export default function LoginScreen() {
                                         </View>
                                         <Text style={[
                                             styles.roleCardTitle,
+                                            isDark && { color: AyurvedaColors.textDark },
                                             selectedRole === 'practitioner' && styles.roleCardTitleSelected,
                                         ]}>
                                             Practitioner
                                         </Text>
                                         <Text style={[
                                             styles.roleCardSubtitle,
+                                            isDark && { color: AyurvedaColors.textDarkMuted },
                                             selectedRole === 'practitioner' && styles.roleCardSubtitleSelected,
                                         ]}>
                                             Provide healing care
@@ -381,18 +396,17 @@ export default function LoginScreen() {
                                 },
                             ]}
                         >
-                            {/* Email Input */}
-                            <View style={styles.inputContainer}>
+                            <View style={[styles.inputContainer, isDark && { backgroundColor: AyurvedaColors.backgroundDarkAlt, borderColor: AyurvedaColors.secondary }]}>
                                 <MaterialCommunityIcons
                                     name="email-outline"
                                     size={22}
-                                    color={AyurvedaColors.secondary}
+                                    color={isDark ? AyurvedaColors.textDarkMuted : AyurvedaColors.secondary}
                                     style={styles.inputIcon}
                                 />
                                 <TextInput
-                                    style={styles.input}
+                                    style={[styles.input, isDark && { color: AyurvedaColors.textDark }]}
                                     placeholder="Email address"
-                                    placeholderTextColor={AyurvedaColors.textMuted}
+                                    placeholderTextColor={isDark ? AyurvedaColors.textDarkMuted : AyurvedaColors.textMuted}
                                     value={email}
                                     onChangeText={setEmail}
                                     keyboardType="email-address"
@@ -401,18 +415,17 @@ export default function LoginScreen() {
                                 />
                             </View>
 
-                            {/* Password Input */}
-                            <View style={styles.inputContainer}>
+                            <View style={[styles.inputContainer, isDark && { backgroundColor: AyurvedaColors.backgroundDarkAlt, borderColor: AyurvedaColors.secondary }]}>
                                 <MaterialCommunityIcons
                                     name="lock-outline"
                                     size={22}
-                                    color={AyurvedaColors.secondary}
+                                    color={isDark ? AyurvedaColors.textDarkMuted : AyurvedaColors.secondary}
                                     style={styles.inputIcon}
                                 />
                                 <TextInput
-                                    style={styles.input}
+                                    style={[styles.input, isDark && { color: AyurvedaColors.textDark }]}
                                     placeholder="Password"
-                                    placeholderTextColor={AyurvedaColors.textMuted}
+                                    placeholderTextColor={isDark ? AyurvedaColors.textDarkMuted : AyurvedaColors.textMuted}
                                     value={password}
                                     onChangeText={setPassword}
                                     secureTextEntry={!isPasswordVisible}
@@ -425,14 +438,14 @@ export default function LoginScreen() {
                                     <MaterialCommunityIcons
                                         name={isPasswordVisible ? 'eye-off-outline' : 'eye-outline'}
                                         size={22}
-                                        color={AyurvedaColors.secondary}
+                                        color={isDark ? AyurvedaColors.textDarkMuted : AyurvedaColors.secondary}
                                     />
                                 </Pressable>
                             </View>
 
                             {/* Forgot Password Link */}
                             <Pressable style={styles.forgotPasswordContainer}>
-                                <Text style={styles.forgotPasswordText}>Forgot your password?</Text>
+                                <Text style={[styles.forgotPasswordText, isDark && { color: AyurvedaColors.primaryLight }]}>Forgot your password?</Text>
                             </Pressable>
                         </Animated.View>
 
@@ -453,6 +466,7 @@ export default function LoginScreen() {
                                 disabled={isLoading || !selectedRole || !email || !password}
                                 style={({ pressed }) => [
                                     styles.loginButton,
+                                    isDark && { backgroundColor: AyurvedaColors.primaryDark },
                                     (!selectedRole || !email || !password) && styles.loginButtonDisabled,
                                     pressed && styles.loginButtonPressed,
                                 ]}
@@ -475,7 +489,7 @@ export default function LoginScreen() {
                                         />
                                     ) : (
                                         <>
-                                            <Text style={styles.loginButtonText}>Login</Text>
+                                            <Text style={[styles.loginButtonText, isDark && { color: AyurvedaColors.textDark }]}>Login</Text>
                                             <MaterialCommunityIcons
                                                 name="arrow-right"
                                                 size={20}
@@ -491,10 +505,10 @@ export default function LoginScreen() {
                         {/* ===================================================== */}
                         {/* REGISTER LINK */}
                         {/* ===================================================== */}
-                        <Animated.View style={[styles.registerSection, { opacity: buttonOpacity }]}>
-                            <Text style={styles.registerText}>Don't have an account? </Text>
-                            <Pressable onPress={() => router.push('/register')}>
-                                <Text style={styles.registerLink}>Create one</Text>
+                        <Animated.View style={[styles.loginSection, { opacity: buttonOpacity }]}>
+                            <Text style={[styles.loginText, isDark && { color: AyurvedaColors.textDarkMuted }]}>Don't have an account? </Text>
+                            <Pressable onPress={() => router.push('/register' as any)}>
+                                <Text style={[styles.loginLink, isDark && { color: AyurvedaColors.primaryLight }]}>Register here</Text>
                             </Pressable>
                         </Animated.View>
 
@@ -543,7 +557,7 @@ const styles = StyleSheet.create({
         width: 100,
         height: 100,
         borderRadius: 50,
-        backgroundColor: 'rgba(255, 255, 255, 0.7)',
+        backgroundColor: 'rgba(255, 255, 255, 0.7)', // Keep as is for glassmorphism or adjust if needed
         justifyContent: 'center',
         alignItems: 'center',
         marginBottom: Spacing.lg,
@@ -690,7 +704,7 @@ const styles = StyleSheet.create({
         opacity: 0.7,
     },
     loginButtonPressed: {
-        opacity: 0.9,
+        transform: [{ scale: 0.98 }],
     },
     loginButtonGradient: {
         flexDirection: 'row',
@@ -709,21 +723,23 @@ const styles = StyleSheet.create({
         marginLeft: Spacing.sm,
     },
 
-    // Register Section
-    registerSection: {
+    // Login/Register Link Section
+    loginSection: {
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: Spacing.lg,
+        marginTop: Spacing.lg,
+        marginBottom: Spacing.xl,
     },
-    registerText: {
+    loginText: {
         fontSize: 14,
         color: AyurvedaColors.textSecondary,
     },
-    registerLink: {
+    loginLink: {
         fontSize: 14,
         fontWeight: '600',
-        color: AyurvedaColors.herbalGreen,
+        color: AyurvedaColors.primary,
+        marginLeft: Spacing.sm,
     },
 
     // Bottom Decoration

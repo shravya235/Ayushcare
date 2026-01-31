@@ -1,3 +1,6 @@
+import { ThemeToggle } from '@/components/ThemeToggle';
+import { AyurvedaColors } from '@/constants/theme';
+import { useTheme } from '@/context/ThemeContext';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import React from 'react';
@@ -5,6 +8,8 @@ import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-nati
 
 export default function PatientDashboard() {
   const router = useRouter();
+  const { theme } = useTheme();
+  const isDark = theme === 'dark';
 
   const handleLogout = () => {
     // TODO: Clear any stored auth tokens/user data
@@ -47,53 +52,60 @@ export default function PatientDashboard() {
   ];
 
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.content}>
-        {/* Header with Logout */}
-        <View style={styles.headerRow}>
-          <Text style={styles.headerTitle}>Patient Dashboard</Text>
-          <TouchableOpacity 
-            style={styles.logoutButton}
-            onPress={handleLogout}
-          >
-            <Ionicons name="log-out-outline" size={24} color="#5A8F69" />
-          </TouchableOpacity>
-        </View>
-
-        {/* Welcome Card */}
-        <View style={styles.welcomeCard}>
-          <View style={styles.avatarContainer}>
-            <Ionicons name="person" size={32} color="#ffffff" />
+    <View
+      style={[styles.container, isDark && { backgroundColor: AyurvedaColors.backgroundDark }]}
+    >
+      <ScrollView contentContainerStyle={styles.contentContainer}>
+        <View style={styles.content}>
+          {/* Header with Logout */}
+          <View style={styles.headerRow}>
+            <Text style={[styles.headerTitle, isDark && { color: AyurvedaColors.textDark }]}>Patient Dashboard</Text>
+            <View style={styles.headerActions}>
+              <ThemeToggle absolutePosition={false} />
+              <TouchableOpacity
+                style={[styles.logoutButton, isDark && { backgroundColor: AyurvedaColors.backgroundDarkAlt }]}
+                onPress={handleLogout}
+              >
+                <Ionicons name="log-out-outline" size={20} color={isDark ? AyurvedaColors.textDark : "#5A8F69"} />
+              </TouchableOpacity>
+            </View>
           </View>
-          <View style={styles.welcomeTextContainer}>
-            <Text style={styles.welcomeTitle}>
-              Namaste, Ananya Rao 🌿
-            </Text>
-            <Text style={styles.welcomeSubtitle}>
-              Your personalized Ayurvedic care space
-            </Text>
+
+          {/* Welcome Card */}
+          <View style={[styles.welcomeCard, isDark && { backgroundColor: AyurvedaColors.backgroundDarkAlt }]}>
+            <View style={styles.avatarContainer}>
+              <Ionicons name="person" size={32} color="#ffffff" />
+            </View>
+            <View style={styles.welcomeTextContainer}>
+              <Text style={[styles.welcomeTitle, isDark && { color: AyurvedaColors.textDark }]}>
+                Namaste, Ananya Rao 🌿
+              </Text>
+              <Text style={[styles.welcomeSubtitle, isDark && { color: AyurvedaColors.textDarkMuted }]}>
+                Your personalized Ayurvedic care space
+              </Text>
+            </View>
+          </View>
+
+          {/* Dashboard Cards Grid */}
+          <View style={styles.cardsGrid}>
+            {dashboardCards.map((card) => (
+              <TouchableOpacity
+                key={card.id}
+                style={[styles.card, { backgroundColor: isDark ? AyurvedaColors.surfaceDark : card.color }]}
+                onPress={() => router.push(card.route as any)}
+                activeOpacity={0.7}
+              >
+                <View style={[styles.iconContainer, isDark && { backgroundColor: 'rgba(255,255,255,0.1)' }]}>
+                  <Ionicons name={card.icon as any} size={28} color={isDark ? AyurvedaColors.primaryLight : "#4A7C59"} />
+                </View>
+                <Text style={[styles.cardTitle, isDark && { color: AyurvedaColors.textDark }]}>{card.title}</Text>
+                <Text style={[styles.cardDescription, isDark && { color: AyurvedaColors.textDarkMuted }]}>{card.description}</Text>
+              </TouchableOpacity>
+            ))}
           </View>
         </View>
-
-        {/* Dashboard Cards Grid */}
-        <View style={styles.cardsGrid}>
-          {dashboardCards.map((card) => (
-            <TouchableOpacity
-              key={card.id}
-              style={[styles.card, { backgroundColor: card.color }]}
-              onPress={() => router.push(card.route as any)}
-              activeOpacity={0.7}
-            >
-              <View style={styles.iconContainer}>
-                <Ionicons name={card.icon as any} size={28} color="#4A7C59" />
-              </View>
-              <Text style={styles.cardTitle}>{card.title}</Text>
-              <Text style={styles.cardDescription}>{card.description}</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 }
 
@@ -101,6 +113,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F5F5F5',
+  },
+  contentContainer: {
+    flexGrow: 1,
+    paddingBottom: 20,
   },
   content: {
     padding: 20,
@@ -112,6 +128,11 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     marginTop: 10,
   },
+  headerActions: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
   headerTitle: {
     fontSize: 28,
     fontWeight: '600',
@@ -121,6 +142,10 @@ const styles = StyleSheet.create({
     padding: 8,
     borderRadius: 8,
     backgroundColor: '#E8F5E9',
+    width: 36,
+    height: 36,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   welcomeCard: {
     backgroundColor: '#D4E7D7',

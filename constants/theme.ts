@@ -25,8 +25,8 @@ export const AyurvedaColors = {
   backgroundLight: '#F8F6F1',      // Warm off-white (main background)
   backgroundLightAlt: '#F0EDE6',   // Slightly darker for cards
   backgroundSage: '#E8EDE8',       // Soft sage tint
-  backgroundDark: '#1A1F1C',       // Dark mode background
-  backgroundDarkAlt: '#242A26',    // Dark mode cards
+  backgroundDark: '#2E302F',       // Soft Grey (not black)
+  backgroundDarkAlt: '#404040',    // Slightly lighter grey for cards
 
   // Accent - Muted Gold/Beige (highlights and emphasis)
   accent: '#C4A962',
@@ -47,7 +47,7 @@ export const AyurvedaColors = {
   textPrimary: '#2D3B30',          // Deep forest for headings
   textSecondary: '#5A6B5E',        // Muted green for body
   textMuted: '#8B9A8E',            // Light muted for captions
-  textDark: '#E8EDE8',             // Light text for dark mode
+  textDark: '#E0E0E0',             // Soft white for dark mode
   textDarkMuted: '#A8B5AB',        // Muted text for dark mode
 
   // Shadows
@@ -60,6 +60,10 @@ export const AyurvedaColors = {
   mutedSage: '#A8C5A8',
   deepForest: '#2D5A3D',
   creamWhite: '#FFFEF9',
+
+  // New Lavender Theme
+  softLavender: '#D1C4E9',
+  mutedLavender: '#E6E6FA',
 };
 
 // =============================================================================

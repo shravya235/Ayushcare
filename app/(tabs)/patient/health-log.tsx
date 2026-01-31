@@ -1,3 +1,5 @@
+import { AyurvedaColors } from '@/constants/theme';
+import { useTheme } from '@/context/ThemeContext';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
@@ -5,6 +7,9 @@ import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 
 
 export default function HealthLog() {
   const router = useRouter();
+  const { theme } = useTheme();
+  const isDark = theme === 'dark';
+
   const [selectedMood, setSelectedMood] = useState<string | null>(null);
   const [sleepHours, setSleepHours] = useState('');
   const [sleepQuality, setSleepQuality] = useState<string | null>(null);
@@ -29,49 +34,51 @@ export default function HealthLog() {
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={[styles.container, isDark && { backgroundColor: AyurvedaColors.backgroundDark }]}>
       <View style={styles.content}>
         {/* Header */}
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.backButton}
           onPress={() => router.push('/(tabs)/patient/dashboard' as any)}
         >
-          <Ionicons name="arrow-back" size={24} color="#2C3E50" />
+          <Ionicons name="arrow-back" size={24} color={isDark ? AyurvedaColors.textDark : "#2C3E50"} />
         </TouchableOpacity>
 
-        <Text style={styles.title}>Daily Health Log</Text>
-        <Text style={styles.subtitle}>
+        <Text style={[styles.title, isDark && { color: AyurvedaColors.textDark }]}>Daily Health Log</Text>
+        <Text style={[styles.subtitle, isDark && { color: AyurvedaColors.textDarkMuted }]}>
           Track your daily wellness and observe patterns
         </Text>
 
         {/* Date */}
-        <View style={styles.dateCard}>
-          <Ionicons name="calendar-outline" size={20} color="#5A8F69" />
-          <Text style={styles.dateText}>
-            {new Date().toLocaleDateString('en-US', { 
-              weekday: 'long', 
-              year: 'numeric', 
-              month: 'long', 
-              day: 'numeric' 
+        <View style={[styles.dateCard, isDark && { backgroundColor: AyurvedaColors.backgroundDarkAlt }]}>
+          <Ionicons name="calendar-outline" size={20} color={isDark ? AyurvedaColors.accent : "#5A8F69"} />
+          <Text style={[styles.dateText, isDark && { color: AyurvedaColors.textDark }]}>
+            {new Date().toLocaleDateString('en-US', {
+              weekday: 'long',
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric'
             })}
           </Text>
         </View>
 
         {/* Mood Section */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>How are you feeling today?</Text>
+          <Text style={[styles.sectionTitle, isDark && { color: AyurvedaColors.textDark }]}>How are you feeling today?</Text>
           <View style={styles.moodContainer}>
             {moods.map((mood) => (
               <TouchableOpacity
                 key={mood.value}
                 style={[
                   styles.moodButton,
-                  selectedMood === mood.value && styles.moodButtonSelected
+                  isDark && { backgroundColor: AyurvedaColors.backgroundDarkAlt, borderColor: 'transparent' },
+                  selectedMood === mood.value && { borderColor: AyurvedaColors.secondary, backgroundColor: AyurvedaColors.primaryLight },
+                  selectedMood === mood.value && isDark && { backgroundColor: AyurvedaColors.primaryDark, borderColor: AyurvedaColors.accent }
                 ]}
                 onPress={() => setSelectedMood(mood.value)}
               >
                 <Text style={styles.moodEmoji}>{mood.emoji}</Text>
-                <Text style={styles.moodLabel}>{mood.label}</Text>
+                <Text style={[styles.moodLabel, isDark && { color: AyurvedaColors.textDark }]}>{mood.label}</Text>
               </TouchableOpacity>
             ))}
           </View>
@@ -79,33 +86,37 @@ export default function HealthLog() {
 
         {/* Sleep Section */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Sleep</Text>
-          <View style={styles.inputContainer}>
-            <Ionicons name="moon-outline" size={20} color="#5A8F69" />
+          <Text style={[styles.sectionTitle, isDark && { color: AyurvedaColors.textDark }]}>Sleep</Text>
+          <View style={[styles.inputContainer, isDark && { backgroundColor: AyurvedaColors.backgroundDarkAlt }]}>
+            <Ionicons name="moon-outline" size={20} color={isDark ? AyurvedaColors.accent : "#5A8F69"} />
             <TextInput
-              style={styles.input}
+              style={[styles.input, isDark && { color: AyurvedaColors.textDark }]}
               placeholder="Hours of sleep"
               value={sleepHours}
               onChangeText={setSleepHours}
               keyboardType="numeric"
-              placeholderTextColor="#999"
+              placeholderTextColor={isDark ? AyurvedaColors.textDarkMuted : "#999"}
             />
           </View>
-          
-          <Text style={styles.subLabel}>Sleep Quality</Text>
+
+          <Text style={[styles.subLabel, isDark && { color: AyurvedaColors.textDark }]}>Sleep Quality</Text>
           <View style={styles.optionsRow}>
             {['Poor', 'Average', 'Good'].map((quality) => (
               <TouchableOpacity
                 key={quality}
                 style={[
                   styles.optionChip,
-                  sleepQuality === quality && styles.optionChipSelected
+                  isDark && { backgroundColor: AyurvedaColors.backgroundDarkAlt, borderColor: AyurvedaColors.secondaryDark },
+                  sleepQuality === quality && { backgroundColor: AyurvedaColors.primaryLight, borderColor: AyurvedaColors.secondary },
+                  sleepQuality === quality && isDark && { backgroundColor: AyurvedaColors.primaryDark, borderColor: AyurvedaColors.accent }
                 ]}
                 onPress={() => setSleepQuality(quality)}
               >
                 <Text style={[
                   styles.optionChipText,
-                  sleepQuality === quality && styles.optionChipTextSelected
+                  isDark && { color: AyurvedaColors.textDark },
+                  sleepQuality === quality && styles.optionChipTextSelected,
+                  sleepQuality === quality && isDark && { color: AyurvedaColors.textDark }
                 ]}>
                   {quality}
                 </Text>
@@ -116,20 +127,24 @@ export default function HealthLog() {
 
         {/* Digestion Section */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Digestion Status</Text>
+          <Text style={[styles.sectionTitle, isDark && { color: AyurvedaColors.textDark }]}>Digestion Status</Text>
           <View style={styles.optionsRow}>
             {['Poor', 'Normal', 'Heavy'].map((status) => (
               <TouchableOpacity
                 key={status}
                 style={[
                   styles.optionChip,
-                  digestionStatus === status && styles.optionChipSelected
+                  isDark && { backgroundColor: AyurvedaColors.backgroundDarkAlt, borderColor: AyurvedaColors.secondaryDark },
+                  digestionStatus === status && { backgroundColor: AyurvedaColors.primaryLight, borderColor: AyurvedaColors.secondary },
+                  digestionStatus === status && isDark && { backgroundColor: AyurvedaColors.primaryDark, borderColor: AyurvedaColors.accent }
                 ]}
                 onPress={() => setDigestionStatus(status)}
               >
                 <Text style={[
                   styles.optionChipText,
-                  digestionStatus === status && styles.optionChipTextSelected
+                  isDark && { color: AyurvedaColors.textDark },
+                  digestionStatus === status && styles.optionChipTextSelected,
+                  digestionStatus === status && isDark && { color: AyurvedaColors.textDark }
                 ]}>
                   {status}
                 </Text>
@@ -140,20 +155,24 @@ export default function HealthLog() {
 
         {/* Activity/Yoga Section */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Activity / Yoga</Text>
+          <Text style={[styles.sectionTitle, isDark && { color: AyurvedaColors.textDark }]}>Activity / Yoga</Text>
           <View style={styles.activityGrid}>
             {['None', 'Light Yoga', 'Walking', 'Meditation', 'Intense Yoga', 'Exercise'].map((activity) => (
               <TouchableOpacity
                 key={activity}
                 style={[
                   styles.activityChip,
-                  activityType === activity && styles.activityChipSelected
+                  isDark && { backgroundColor: AyurvedaColors.backgroundDarkAlt, borderColor: AyurvedaColors.secondaryDark },
+                  activityType === activity && { backgroundColor: AyurvedaColors.primaryLight, borderColor: AyurvedaColors.secondary },
+                  activityType === activity && isDark && { backgroundColor: AyurvedaColors.primaryDark, borderColor: AyurvedaColors.accent }
                 ]}
                 onPress={() => setActivityType(activity)}
               >
                 <Text style={[
                   styles.activityChipText,
-                  activityType === activity && styles.activityChipTextSelected
+                  isDark && { color: AyurvedaColors.textDark },
+                  activityType === activity && styles.activityChipTextSelected,
+                  activityType === activity && isDark && { color: AyurvedaColors.textDark }
                 ]}>
                   {activity}
                 </Text>
@@ -164,20 +183,24 @@ export default function HealthLog() {
 
         {/* Symptoms Section */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Any symptoms today?</Text>
+          <Text style={[styles.sectionTitle, isDark && { color: AyurvedaColors.textDark }]}>Any symptoms today?</Text>
           <View style={styles.symptomsGrid}>
             {['Headache', 'Fatigue', 'Anxiety', 'Digestive Issues', 'Body Pain', 'Stress'].map((symptom) => (
-              <TouchableOpacity 
-                key={symptom} 
+              <TouchableOpacity
+                key={symptom}
                 style={[
                   styles.symptomChip,
-                  selectedSymptoms.includes(symptom) && styles.symptomChipSelected
+                  isDark && { backgroundColor: AyurvedaColors.backgroundDarkAlt, borderColor: AyurvedaColors.secondaryDark },
+                  selectedSymptoms.includes(symptom) && { backgroundColor: AyurvedaColors.primaryLight, borderColor: AyurvedaColors.secondary },
+                  selectedSymptoms.includes(symptom) && isDark && { backgroundColor: AyurvedaColors.primaryDark, borderColor: AyurvedaColors.accent }
                 ]}
                 onPress={() => toggleSymptom(symptom)}
               >
                 <Text style={[
                   styles.symptomText,
-                  selectedSymptoms.includes(symptom) && styles.symptomTextSelected
+                  isDark && { color: AyurvedaColors.textDark },
+                  selectedSymptoms.includes(symptom) && styles.symptomTextSelected,
+                  selectedSymptoms.includes(symptom) && isDark && { color: AyurvedaColors.textDark }
                 ]}>
                   {symptom}
                 </Text>
@@ -188,21 +211,21 @@ export default function HealthLog() {
 
         {/* Notes Section */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Additional Notes</Text>
+          <Text style={[styles.sectionTitle, isDark && { color: AyurvedaColors.textDark }]}>Additional Notes</Text>
           <TextInput
-            style={styles.notesInput}
+            style={[styles.notesInput, isDark && { backgroundColor: AyurvedaColors.backgroundDarkAlt, color: AyurvedaColors.textDark }]}
             placeholder="Write any observations, meals, activities..."
             value={notes}
             onChangeText={setNotes}
             multiline
             numberOfLines={4}
-            placeholderTextColor="#999"
+            placeholderTextColor={isDark ? AyurvedaColors.textDarkMuted : "#999"}
           />
         </View>
 
         {/* Save Button */}
-        <TouchableOpacity 
-          style={styles.saveButton}
+        <TouchableOpacity
+          style={[styles.saveButton, isDark && { backgroundColor: AyurvedaColors.primary }]}
           onPress={() => {
             const logData = {
               date: new Date().toISOString(),
