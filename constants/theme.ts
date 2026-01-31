@@ -141,6 +141,15 @@ export const Fonts = Platform.select({
   },
 });
 
+export const Typography = {
+  h1: { fontSize: 32, fontWeight: '700' as const },
+  h2: { fontSize: 24, fontWeight: '600' as const },
+  h3: { fontSize: 20, fontWeight: '600' as const },
+  body1: { fontSize: 16 },
+  body2: { fontSize: 14 },
+  caption: { fontSize: 12 },
+};
+
 // =============================================================================
 // SPACING & LAYOUT
 // =============================================================================

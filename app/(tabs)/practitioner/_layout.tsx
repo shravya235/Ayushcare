@@ -26,6 +26,8 @@ export default function PractitionerLayout() {
             <Stack.Screen name="new-patient" options={{ title: 'New Patient' }} />
             <Stack.Screen name="patient/[id]" options={{ title: 'Patient Details' }} />
             <Stack.Screen name="patient/[id]/note" options={{ title: 'Add Note', presentation: 'modal' }} />
+            <Stack.Screen name="tele-consultation/index" options={{ title: 'Tele-Consultation' }} />
+            <Stack.Screen name="tele-consultation/[id]" options={{ title: 'Appointment Details' }} />
         </Stack>
     );
 }

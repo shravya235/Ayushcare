@@ -56,6 +56,14 @@ export default function PractitionerDashboard() {
             icon: 'person-add-outline',
             route: '/(tabs)/practitioner/new-patient',
             color: '#E8F0E5' // Light sage green
+        },
+        {
+            id: 5,
+            title: 'Tele-Consultation',
+            description: 'Requests & Meetings',
+            icon: 'videocam-outline',
+            route: '/practitioner/tele-consultation',
+            color: '#FFF8E1' // Light cream/gold
         }
     ];
 

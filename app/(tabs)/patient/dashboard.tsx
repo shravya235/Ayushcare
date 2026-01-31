@@ -49,6 +49,14 @@ export default function PatientDashboard() {
       icon: 'time-outline',
       route: '/patient/history',
       color: '#E8F0E5' // Light sage green
+    },
+    {
+      id: 5,
+      title: 'Tele-Consultation',
+      description: 'Consult with Vaidyas',
+      icon: 'videocam-outline',
+      route: '/patient/tele-consultation',
+      color: '#FFF8E1' // Light cream/gold
     }
   ];
 
@@ -83,14 +91,14 @@ export default function PatientDashboard() {
 
     return (
       <G>
-        <Hexagon 
-          x={x} 
-          y={y} 
-          size={size} 
-          fill={fill} 
-          strokeColor={strokeColor} 
-          strokeWidth={strokeWidth} 
-          opacity={opacity} 
+        <Hexagon
+          x={x}
+          y={y}
+          size={size}
+          fill={fill}
+          strokeColor={strokeColor}
+          strokeWidth={strokeWidth}
+          opacity={opacity}
         />
         {/* Icon positioned at center of hexagon */}
         {iconName === 'leaf' && (
@@ -132,10 +140,10 @@ export default function PatientDashboard() {
                 style={[styles.logoutButton, isDark && { backgroundColor: AyurvedaColors.backgroundDarkAlt }]}
                 onPress={handleLogout}
               >
-                <Ionicons 
-                  name="log-out-outline" 
-                  size={20} 
-                  color={isDark ? AyurvedaColors.textDark : "#6B7E68"} 
+                <Ionicons
+                  name="log-out-outline"
+                  size={20}
+                  color={isDark ? AyurvedaColors.textDark : "#6B7E68"}
                 />
               </TouchableOpacity>
             </View>
@@ -164,52 +172,52 @@ export default function PatientDashboard() {
             <Text style={[styles.decorativeSubtitle, isDark && { color: AyurvedaColors.textDarkMuted }]}>
               Holistic Care • Balance • Harmony
             </Text>
-            
+
             <View style={styles.hexagonContainer}>
               <Svg height="160" width="100%" viewBox="0 0 360 180">
                 {/* Honeycomb cluster - structured pattern */}
                 {/* Top row - 2 hexagons */}
                 <Hexagon x={150} y={30} size={35} fill={isDark ? "rgba(168, 150, 201, 0.2)" : "#E8DFF0"} strokeColor={isDark ? "rgba(168, 150, 201, 0.3)" : "#D9CEE8"} strokeWidth={1.5} opacity={0.4} />
                 <Hexagon x={210} y={30} size={35} fill={isDark ? "rgba(184, 168, 212, 0.15)" : "#F4F1F8"} strokeColor={isDark ? "rgba(184, 168, 212, 0.3)" : "#D9CEE8"} strokeWidth={1.5} opacity={0.3} />
-                
+
                 {/* Second row - 3 hexagons */}
                 <Hexagon x={120} y={55} size={35} fill={isDark ? "rgba(168, 150, 201, 0.2)" : "#E8DFF0"} strokeColor={isDark ? "rgba(168, 150, 201, 0.3)" : "#D9CEE8"} strokeWidth={1.5} opacity={0.35} />
-                <HexagonWithIcon 
-                  x={180} y={55} size={35} 
-                  fill={isDark ? "rgba(197, 180, 227, 0.3)" : "#C5B4E3"} 
-                  strokeColor={isDark ? "rgba(184, 168, 212, 0.5)" : "#B8A8D4"} 
+                <HexagonWithIcon
+                  x={180} y={55} size={35}
+                  fill={isDark ? "rgba(197, 180, 227, 0.3)" : "#C5B4E3"}
+                  strokeColor={isDark ? "rgba(184, 168, 212, 0.5)" : "#B8A8D4"}
                   strokeWidth={2.5} opacity={0.7}
                   iconName="leaf" iconColor={isDark ? AyurvedaColors.primaryLight : "#8B9D83"}
                 />
                 <Hexagon x={240} y={55} size={35} fill={isDark ? "rgba(168, 150, 201, 0.2)" : "#E8DFF0"} strokeColor={isDark ? "rgba(168, 150, 201, 0.3)" : "#D9CEE8"} strokeWidth={1.5} opacity={0.4} />
-                
+
                 {/* Third row - 4 hexagons (main feature row) */}
                 <Hexagon x={90} y={80} size={35} fill={isDark ? "rgba(184, 168, 212, 0.15)" : "#F4F1F8"} strokeColor={isDark ? "rgba(184, 168, 212, 0.3)" : "#D9CEE8"} strokeWidth={1.5} opacity={0.3} />
                 <Hexagon x={150} y={80} size={35} fill={isDark ? "rgba(184, 168, 212, 0.35)" : "#B8A8D4"} strokeColor={isDark ? "rgba(169, 150, 201, 0.6)" : "#A996C9"} strokeWidth={2.5} opacity={0.8} />
-                <HexagonWithIcon 
-                  x={210} y={80} size={35} 
-                  fill={isDark ? "rgba(169, 150, 201, 0.4)" : "#A996C9"} 
-                  strokeColor={isDark ? "rgba(149, 132, 184, 0.7)" : "#9584B8"} 
+                <HexagonWithIcon
+                  x={210} y={80} size={35}
+                  fill={isDark ? "rgba(169, 150, 201, 0.4)" : "#A996C9"}
+                  strokeColor={isDark ? "rgba(149, 132, 184, 0.7)" : "#9584B8"}
                   strokeWidth={3} opacity={0.9}
                   iconName="heart" iconColor="#ffffff"
                 />
                 <Hexagon x={270} y={80} size={35} fill={isDark ? "rgba(184, 168, 212, 0.15)" : "#F4F1F8"} strokeColor={isDark ? "rgba(184, 168, 212, 0.3)" : "#D9CEE8"} strokeWidth={1.5} opacity={0.3} />
-                
+
                 {/* Fourth row - 3 hexagons */}
-                <HexagonWithIcon 
-                  x={120} y={105} size={35} 
-                  fill={isDark ? "rgba(184, 168, 212, 0.35)" : "#B8A8D4"} 
-                  strokeColor={isDark ? "rgba(169, 150, 201, 0.6)" : "#A996C9"} 
+                <HexagonWithIcon
+                  x={120} y={105} size={35}
+                  fill={isDark ? "rgba(184, 168, 212, 0.35)" : "#B8A8D4"}
+                  strokeColor={isDark ? "rgba(169, 150, 201, 0.6)" : "#A996C9"}
                   strokeWidth={2.5} opacity={0.8}
                   iconName="pulse" iconColor="#ffffff"
                 />
                 <Hexagon x={180} y={105} size={35} fill={isDark ? "rgba(217, 206, 232, 0.25)" : "#D9CEE8"} strokeColor={isDark ? "rgba(197, 180, 227, 0.4)" : "#C5B4E3"} strokeWidth={2} opacity={0.6} />
                 <Hexagon x={240} y={105} size={35} fill={isDark ? "rgba(168, 150, 201, 0.2)" : "#E8DFF0"} strokeColor={isDark ? "rgba(168, 150, 201, 0.3)" : "#D9CEE8"} strokeWidth={1.5} opacity={0.4} />
-                
+
                 {/* Fifth row - 2 hexagons */}
                 <Hexagon x={150} y={130} size={35} fill={isDark ? "rgba(168, 150, 201, 0.2)" : "#E8DFF0"} strokeColor={isDark ? "rgba(168, 150, 201, 0.3)" : "#D9CEE8"} strokeWidth={1.5} opacity={0.35} />
                 <Hexagon x={210} y={130} size={35} fill={isDark ? "rgba(184, 168, 212, 0.15)" : "#F4F1F8"} strokeColor={isDark ? "rgba(184, 168, 212, 0.3)" : "#D9CEE8"} strokeWidth={1.5} opacity={0.3} />
-                
+
                 {/* Additional scattered hexagons for depth */}
                 <Hexagon x={60} y={58} size={30} fill={isDark ? "rgba(168, 150, 201, 0.15)" : "#E8DFF0"} strokeColor={isDark ? "rgba(168, 150, 201, 0.25)" : "#D9CEE8"} strokeWidth={1.5} opacity={0.25} />
                 <Hexagon x={300} y={55} size={30} fill={isDark ? "rgba(184, 168, 212, 0.1)" : "#F4F1F8"} strokeColor={isDark ? "rgba(184, 168, 212, 0.25)" : "#D9CEE8"} strokeWidth={1.5} opacity={0.25} />
@@ -225,7 +233,7 @@ export default function PatientDashboard() {
               <TouchableOpacity
                 key={card.id}
                 style={[
-                  styles.card, 
+                  styles.card,
                   { backgroundColor: isDark ? AyurvedaColors.surfaceDark : card.color },
                   isDark && styles.cardDarkBorder
                 ]}
@@ -233,10 +241,10 @@ export default function PatientDashboard() {
                 activeOpacity={0.7}
               >
                 <View style={[styles.iconContainer, isDark && { backgroundColor: 'rgba(255,255,255,0.1)' }]}>
-                  <Ionicons 
-                    name={card.icon as any} 
-                    size={28} 
-                    color={isDark ? AyurvedaColors.primaryLight : "#6B7E68"} 
+                  <Ionicons
+                    name={card.icon as any}
+                    size={28}
+                    color={isDark ? AyurvedaColors.primaryLight : "#6B7E68"}
                   />
                 </View>
                 <Text style={[styles.cardTitle, isDark && { color: AyurvedaColors.textDark }]}>

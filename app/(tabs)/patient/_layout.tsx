@@ -22,6 +22,10 @@ export default function PatientLayout() {
             <Stack.Screen name="health-log" options={{ title: 'Health Log' }} />
             <Stack.Screen name="history" options={{ title: 'History' }} />
             <Stack.Screen name="results" options={{ title: 'Results' }} />
+            <Stack.Screen name="tele-consultation/index" options={{ title: 'Tele-Consultation', headerShown: false }} />
+            <Stack.Screen name="tele-consultation/[id]" options={{ title: 'Consultation Details', headerShown: false }} />
+            <Stack.Screen name="tele-consultation/request" options={{ title: 'Request Consultation', headerShown: false }} />
+            <Stack.Screen name="tele-consultation/confirmation" options={{ title: 'Confirmation', headerShown: false }} />
         </Stack>
     );
 }
