@@ -444,7 +444,10 @@ export default function LoginScreen() {
                             </View>
 
                             {/* Forgot Password Link */}
-                            <Pressable style={styles.forgotPasswordContainer}>
+                            <Pressable
+                                onPress={() => router.push('/forgot-password' as any)}
+                                style={styles.forgotPasswordContainer}
+                            >
                                 <Text style={[styles.forgotPasswordText, isDark && { color: AyurvedaColors.primaryLight }]}>Forgot your password?</Text>
                             </Pressable>
                         </Animated.View>
