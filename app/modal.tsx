@@ -6,7 +6,6 @@ import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { AyurvedaColors, BorderRadius, Colors, Spacing } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
-import { rf, wpDirect } from '@/utils/responsive';
 
 export default function ModalScreen() {
   const colorScheme = useColorScheme() ?? 'light';
@@ -21,7 +20,7 @@ export default function ModalScreen() {
         ]}>
         <MaterialCommunityIcons
           name="information"
-          size={wpDirect(40)}
+          size={40}
           color={Colors[colorScheme].tint}
         />
       </View>
@@ -45,7 +44,7 @@ export default function ModalScreen() {
           ]}>
           <MaterialCommunityIcons
             name="home"
-            size={wpDirect(20)}
+            size={20}
             color={AyurvedaColors.backgroundLight}
           />
           <ThemedText
@@ -68,9 +67,9 @@ const styles = StyleSheet.create({
     padding: Spacing.xl,
   },
   iconContainer: {
-    width: wpDirect(80),
-    height: wpDirect(80),
-    borderRadius: wpDirect(40),
+    width: 80,
+    height: 80,
+    borderRadius: 40,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: Spacing.lg,
@@ -82,7 +81,7 @@ const styles = StyleSheet.create({
   description: {
     textAlign: 'center',
     marginBottom: Spacing.xl,
-    lineHeight: rf(26),
+    lineHeight: 26,
   },
   link: {
     marginTop: Spacing.md,
@@ -96,7 +95,7 @@ const styles = StyleSheet.create({
     borderRadius: BorderRadius.lg,
   },
   buttonText: {
-    fontSize: rf(16),
+    fontSize: 16,
     fontWeight: '600',
   },
 });

@@ -1,5 +1,4 @@
 import { AyurvedaColors, BorderRadius, Shadows, Spacing } from '@/constants/theme';
-import { hp, rf, wp, wpDirect } from '@/utils/responsive';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
@@ -189,36 +188,6 @@ export default function LoginScreen() {
 
         setIsLoading(true);
 
-        // TODO: Implement Firebase Authentication
-        // ---------------------------------------------------------------------
-        // Replace the mock logic below with Firebase Auth:
-        //
-        // import { signInWithEmailAndPassword } from 'firebase/auth';
-        // import { auth } from '@/config/firebase';
-        //
-        // try {
-        //   const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        //   const user = userCredential.user;
-        //   
-        //   // TODO: Fetch user role from Firestore and validate against selectedRole
-        //   // const userDoc = await getDoc(doc(db, 'users', user.uid));
-        //   // const userData = userDoc.data();
-        //   // if (userData?.role !== selectedRole) {
-        //   //   throw new Error('Role mismatch');
-        //   // }
-        //   
-        //   // Navigate based on role
-        //   if (selectedRole === 'patient') {
-        //     router.replace('/patient-dashboard');
-        //   } else {
-        //     router.replace('/practitioner-dashboard');
-        //   }
-        // } catch (error) {
-        //   // TODO: Handle authentication errors
-        //   console.error('Login error:', error);
-        // }
-        // ---------------------------------------------------------------------
-
         // MOCK LOGIN LOGIC - Remove when implementing Firebase
         await new Promise(resolve => setTimeout(resolve, 1500));
 
@@ -226,10 +195,8 @@ export default function LoginScreen() {
 
         // Navigate based on selected role
         if (selectedRole === 'patient') {
-            // TODO: Replace with actual patient dashboard route
             router.replace('/(tabs)/patient/dashboard' as any);
         } else {
-            // TODO: Replace with actual practitioner dashboard route
             router.replace('/(tabs)');
         }
     };
@@ -562,24 +529,24 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        paddingHorizontal: wp(6),
-        paddingVertical: hp(4),
+        paddingHorizontal: Spacing.lg,
+        paddingVertical: Spacing.xl,
         justifyContent: 'center',
     },
 
     // Header Section
     headerSection: {
         alignItems: 'center',
-        marginBottom: hp(4),
+        marginBottom: Spacing.xl,
     },
     logoContainer: {
-        width: wpDirect(100),
-        height: wpDirect(100),
-        borderRadius: wpDirect(50),
+        width: 100,
+        height: 100,
+        borderRadius: 50,
         backgroundColor: 'rgba(255, 255, 255, 0.7)',
         justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: hp(3),
+        marginBottom: Spacing.lg,
         shadowColor: AyurvedaColors.deepForest,
         shadowOffset: { width: 0, height: 4 },
         shadowOpacity: 0.15,
@@ -587,26 +554,26 @@ const styles = StyleSheet.create({
         elevation: 8,
     },
     title: {
-        fontSize: rf(32),
+        fontSize: 32,
         fontWeight: '700',
         color: AyurvedaColors.deepForest,
         letterSpacing: 0.5,
         marginBottom: Spacing.xs,
     },
     subtitle: {
-        fontSize: rf(16),
+        fontSize: 16,
         fontWeight: '400',
         color: AyurvedaColors.secondary,
         textAlign: 'center',
-        lineHeight: rf(22),
+        lineHeight: 22,
     },
 
     // Role Selector Section
     roleSelectorSection: {
-        marginBottom: hp(4),
+        marginBottom: Spacing.xl,
     },
     sectionLabel: {
-        fontSize: rf(14),
+        fontSize: 14,
         fontWeight: '600',
         color: AyurvedaColors.textSecondary,
         textTransform: 'uppercase',
@@ -625,7 +592,7 @@ const styles = StyleSheet.create({
     roleCard: {
         backgroundColor: 'rgba(255, 255, 255, 0.85)',
         borderRadius: BorderRadius.lg,
-        padding: wp(5),
+        padding: Spacing.md,
         alignItems: 'center',
         borderWidth: 2,
         borderColor: 'transparent',
@@ -637,9 +604,9 @@ const styles = StyleSheet.create({
         ...Shadows.light.elevated,
     },
     roleIconContainer: {
-        width: wpDirect(70),
-        height: wpDirect(70),
-        borderRadius: wpDirect(35),
+        width: 70,
+        height: 70,
+        borderRadius: 35,
         backgroundColor: 'rgba(74, 124, 89, 0.1)',
         justifyContent: 'center',
         alignItems: 'center',
@@ -655,7 +622,7 @@ const styles = StyleSheet.create({
         right: 4,
     },
     roleCardTitle: {
-        fontSize: rf(16),
+        fontSize: 16,
         fontWeight: '600',
         color: AyurvedaColors.deepForest,
         marginBottom: 4,
@@ -664,7 +631,7 @@ const styles = StyleSheet.create({
         color: AyurvedaColors.offWhite,
     },
     roleCardSubtitle: {
-        fontSize: rf(12),
+        fontSize: 12,
         color: AyurvedaColors.textMuted,
         textAlign: 'center',
     },
@@ -674,7 +641,8 @@ const styles = StyleSheet.create({
 
     // Form Section
     formSection: {
-        marginBottom: hp(3),
+        marginBottom: Spacing.lg,
+        width: '100%',
     },
     inputContainer: {
         flexDirection: 'row',
@@ -692,8 +660,8 @@ const styles = StyleSheet.create({
     },
     input: {
         flex: 1,
-        paddingVertical: Spacing.md + 2,
-        fontSize: rf(16),
+        paddingVertical: Spacing.md,
+        fontSize: 16,
         color: AyurvedaColors.textPrimary,
     },
     passwordToggle: {
@@ -704,14 +672,14 @@ const styles = StyleSheet.create({
         marginTop: Spacing.xs,
     },
     forgotPasswordText: {
-        fontSize: rf(14),
+        fontSize: 14,
         color: AyurvedaColors.herbalGreen,
         fontWeight: '500',
     },
 
     // Button Section
     buttonSection: {
-        marginBottom: hp(3),
+        marginBottom: Spacing.lg,
     },
     loginButton: {
         borderRadius: BorderRadius.md,
@@ -728,11 +696,11 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        paddingVertical: hp(2),
+        paddingVertical: Spacing.md,
         paddingHorizontal: Spacing.xl,
     },
     loginButtonText: {
-        fontSize: rf(18),
+        fontSize: 18,
         fontWeight: '600',
         color: AyurvedaColors.offWhite,
         letterSpacing: 0.5,
@@ -746,14 +714,14 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: hp(3),
+        marginBottom: Spacing.lg,
     },
     registerText: {
-        fontSize: rf(14),
+        fontSize: 14,
         color: AyurvedaColors.textSecondary,
     },
     registerLink: {
-        fontSize: rf(14),
+        fontSize: 14,
         fontWeight: '600',
         color: AyurvedaColors.herbalGreen,
     },
@@ -765,3 +733,4 @@ const styles = StyleSheet.create({
         opacity: 0.5,
     },
 });
+

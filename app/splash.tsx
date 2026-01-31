@@ -1,5 +1,4 @@
-import { AyurvedaColors } from '@/constants/theme';
-import { hp, rf, wpDirect } from '@/utils/responsive';
+import { AyurvedaColors, Spacing } from '@/constants/theme';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
@@ -17,8 +16,8 @@ const ANIMATION_CONFIG = {
     logoAnimationDuration: 600,
     titleFadeDuration: 400,
     taglineFadeDuration: 400,
-    logoSlideDistance: hp(3.5),
-    taglineSlideDistance: hp(1.8),
+    logoSlideDistance: 30,
+    taglineSlideDistance: 15,
     staggerDelay: 150,
     navigationDelay: 800, // delay after animations complete
 };
@@ -148,7 +147,7 @@ export default function SplashScreen() {
                     >
                         <MaterialCommunityIcons
                             name="leaf"
-                            size={wpDirect(80)}
+                            size={80}
                             color={AyurvedaColors.herbalGreen}
                         />
                     </Animated.View>
@@ -195,13 +194,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     iconContainer: {
-        width: wpDirect(120),
-        height: wpDirect(120),
-        borderRadius: wpDirect(60),
+        width: 120,
+        height: 120,
+        borderRadius: 60,
         backgroundColor: 'rgba(255, 255, 255, 0.7)',
         justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: hp(3),
+        marginBottom: Spacing.xl,
         shadowColor: AyurvedaColors.deepForest,
         shadowOffset: { width: 0, height: 4 },
         shadowOpacity: 0.15,
@@ -209,14 +208,14 @@ const styles = StyleSheet.create({
         elevation: 8,
     },
     appName: {
-        fontSize: rf(36),
+        fontSize: 36,
         fontWeight: '700',
         color: AyurvedaColors.deepForest,
         letterSpacing: 2,
-        marginBottom: hp(1),
+        marginBottom: Spacing.sm,
     },
     tagline: {
-        fontSize: rf(16),
+        fontSize: 16,
         fontWeight: '300',
         color: AyurvedaColors.herbalGreen,
         letterSpacing: 1,
